@@ -318,6 +318,18 @@ document.querySelectorAll('#language-menu li').forEach(li => {
   });
 });
 
+// =======================
+// 5. Typing Animation (Slower)
+// =======================
+const roles = {
+  en: ['Front-end Developer', 'Back-end Developer', 'Full-stack Developer'],
+  ar: ['مطوّر واجهات أمامية', 'مطوّر واجهات خلفية', 'مطوّر متكامل']
+};
+
+let roleIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
 function typeRole() {
   const currentRole = roles[currentLang]?.[roleIndex];
   if (!currentRole) return;
@@ -332,20 +344,23 @@ function typeRole() {
 
   if (!isDeleting && charIndex === currentRole.length) {
     isDeleting = true;
-    setTimeout(typeRole, 2500); // ✅ انتظر 2.5 ثانية بعد كتابة الكلمة
-    return; // ✅ مهم
+    setTimeout(typeRole, 2500); // ✅ تأخير 2.5 ثانية بعد الانتهاء من الكتابة
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles[currentLang].length;
-    setTimeout(typeRole, 1500); // ✅ انتظر 1.5 ثانية قبل كتابة التالية
-    return; // ✅ مهم
+    setTimeout(typeRole, 1500); // ✅ تأخير 1.5 ثانية قبل الكتابة التالية
   } else {
-    const typingSpeed = 250;
-    const erasingSpeed = 100;
+    // ✅ الكتابة أبطأ: 250ms | المسح أسرع: 100ms
+    const typingSpeed = 250;   // ✅ أبطأ (250ms بدل 150ms)
+    const erasingSpeed = 100;  // مسح سريع
     setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
   }
 }
 
+// Start typing after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(typeRole, 500);
+});
 
 // =======================
 // 6. Scroll Animations & Active Nav (FIXED)
