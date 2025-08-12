@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Amer Developer | Full-Stack Web Developer & AI-Powered Solution Builder" />
+  <meta name="keywords" content="web developer, portfolio, HTML, CSS, JavaScript, Python, AI tools, Tailwind, Egypt" />
+  <meta name="author" content="Amer Developer" />
+  <meta name="theme-color" content="#000033" />
+  <meta name="robots" content="index, follow" />
+
+  <title>Amer Developer | Building Digital Futures with Code & Creativity</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+
+  <!-- Preload Key Assets -->
+  <link rel="preload" as="image" href="assets/images/logo.png" />
+  <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Inline Critical CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background: #000033;
+      color: #FFFFFF;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    body { opacity: 0; animation: fadeIn 0.5s ease forwards; }
+  </style>
+</head>
+<body>
+
+  <!-- Skip to Content -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Header & Navigation -->
+  <header class="main-header" role="banner">
+    <div class="logo" aria-label="Amer Developer Logo">
+      <img src="assets/images/logo.png" alt="Amer Developer" id="logo-img" loading="eager" width="60" height="60" />
+    </div>
+
+    <nav class="main-nav" aria-label="Main Navigation">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#home" class="nav-link active" data-translate="home">Home</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link" data-translate="about">About</a></li>
+        <li class="nav-item"><a href="#skills" class="nav-link" data-translate="skills">Skills</a></li>
+        <li class="nav-item"><a href="#tools" class="nav-link" data-translate="tools">Tools</a></li>
+        <li class="nav-item"><a href="#projects" class="nav-link" data-translate="projects">Projects</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link" data-translate="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="hero-content-wrapper">
+        <div class="hero-text">
+          <h1 class="hero-title" data-animation="slide-up">
+            <span class="highlight" data-translate="Hello, I'm">Hello, I'm</span> <strong id="hero-name">Amer</strong>
+          </h1>
+          <h2 class="hero-subtitle" data-animation="slide-up" style="animation-delay: 0.2s;">
+            <span class="typing-text" id="typing-text"></span>
+          </h2>
+          <p class="hero-paragraph" data-animation="fade-in" style="animation-delay: 0.4s;" data-translate="Building digital solutions">
+            I build digital solutions that help you appear professionally and effectively in the digital market.
+          </p>
+          <a href="#about" class="btn btn-primary" data-animation="slide-up" style="animation-delay: 0.6s;" data-translate="More About Me">
+            More About Me <i class="fas fa-arrow-right"></i>
+          </a>
+
+          <!-- Social Icons Below Button -->
+          <div class="social-icons-home" data-animation="fade-in" style="animation-delay: 0.8s;">
+            <a href="https://github.com/Amer-Developer1" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+            <a href="https://www.instagram.com/amer.developer" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+            <a href="https://wa.me/2001032637977" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp fa-lg"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-avatar" data-animation="zoom-in" style="animation-delay: 0.8s;">
+          <img src="assets/images/logo.png" alt="Amer Developer Portrait" class="avatar-img" loading="eager" width="320" height="320" />
+          <div class="glow-ring"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section" data-section="about">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="About Me">About Me</h2>
+        <div class="about-content" data-animation="fade-in">
+          <p id="about-text">
+            Hello, I'm Amer from Egypt 🇪🇬, a web developer and programmer passionate about turning ideas into practical and effective digital solutions. I started my journey in programming through self-learning, and with every project I complete, I gain deeper experience and broader vision.
+          </p>
+          <p id="about-text-2">
+            I specialize in designing and coding modern, responsive, and user-friendly websites, with a strong focus on user experience and fine details. I master HTML, CSS, and JavaScript to create professional interfaces, along with Python for building smart tools and applications.
+          </p>
+          <p id="about-text-3">
+            I always strive to improve my skills and add new technologies to my toolkit, aiming to deliver the highest possible value to every client. I believe that the success of any project starts with a clear understanding of the goal and vision, then transforming them into a digital product that achieves the desired outcome efficiently and professionally.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section" data-section="skills">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="My Skills">My Skills</h2>
+        <div class="skills-grid" id="skills-grid">
+          <!-- Filled via JS with correct descriptions -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="section tools-section" data-section="tools">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="My Tools">My Tools</h2>
+        <div class="tools-grid" id="tools-grid">
+          <!-- Filled via JS with correct descriptions -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section" data-section="projects">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="Latest Projects">Latest Projects</h2>
+        <div class="projects-grid" id="projects-grid">
+          <!-- Filled via JS -->
+        </div>
+        <div class="projects-empty" id="projects-empty" style="display: none; text-align: center; color: #CCCCCC;">
+          <p data-translate="No projects added yet.">No projects added yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section" data-section="contact">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="Contact Me">Contact Me</h2>
+        <div class="contact-form-wrapper">
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="name" data-translate="Your Name">Your Name</label>
+              <input type="text" id="name" name="name" required autocomplete="name" />
+              <div class="error-message" id="name-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" data-translate="Your Email">Your Email</label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+              <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="message" data-translate="Your Message">Your Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+              <div class="error-message" id="message-error"></div>
+            </div>
+
+            <!-- Dual Send Buttons -->
+            <div class="send-options">
+              <button type="button" class="btn btn-email" id="send-email">
+                <i class="fas fa-envelope"></i> <span data-translate="Send via Email">Send via Email</span>
+              </button>
+              <button type="button" class="btn btn-whatsapp" id="send-whatsapp">
+                <i class="fab fa-whatsapp"></i> <span data-translate="Send via WhatsApp">Send via WhatsApp</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="motivational-message">
+            <blockquote data-translate="I am available for collaboration">
+              "I am available for collaboration and new projects. Feel free to reach out for any inquiries or job offers."
+            </blockquote>
+          </div>
+
+          <!-- All Social Links in Contact Section -->
+          <div class="social-links-contact">
+            <a href="https://github.com/Amer-Developer1" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.facebook.com/amer.developer" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://tiktok.com/@amer.developer8" target="_blank" rel="noopener" onclick="showTikTokNotice(); return false;">
+              <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.instagram.com/amer.developer" target="_blank" rel="noopener">
+              <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://twitter.com/amer_developer" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i> Twitter
+            </a>
+            <a href="https://wa.me/2001032637977" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; <span id="year">2025</span> Amer Developer. All rights reserved.</p>
+        <p>Email: <a href="mailto:iamamer030@gmail.com">iamamer030@gmail.com</a></p>
+        <p>Phone (WhatsApp only): <a href="https://wa.me/2001032637977">+20 010 3263 7977</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Language Switcher -->
+  <div class="language-switcher" id="language-switcher" role="button" aria-label="Change Language">
+    <i class="fas fa-globe"></i>
+    <ul class="language-menu" id="language-menu" hidden>
+      <li data-lang="ar">العربية</li>
+      <li data-lang="en" class="active">English</li>
+    </ul>
+  </div>
+
+  <!-- Custom Password Modal -->
+  <div class="modal" id="password-modal" hidden>
+    <div class="modal-content">
+      <h4 data-translate="Enter Admin Password">Enter Admin Password</h4>
+      <p data-translate="This area is protected. Enter the password to continue.">This area is protected. Enter the password to continue.</p>
+      <input type="password" id="admin-password" placeholder="Enter password" />
+      <div class="error-message" id="password-error" style="color: #FF5555; margin: 10px 0; display: none;"></div>
+      <div class="modal-buttons">
+        <button class="btn" onclick="checkPassword()" data-translate="Enter">Enter</button>
+        <button class="btn btn-secondary" onclick="closePasswordModal()" data-translate="Cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel" id="admin-panel" hidden>
+    <div class="admin-header">
+      <h3 data-translate="Admin Panel">Admin Panel</h3>
+      <button class="btn-close" onclick="toggleAdminPanel()">&times;</button>
+    </div>
+
+    <div class="admin-controls-grid">
+      <button class="admin-btn" onclick="openAddProject()"><i class="fas fa-plus"></i> <span data-translate="Add Project">Add Project</span></button>
+      <button class="admin-btn" onclick="openAddSkill()"><i class="fas fa-plus"></i> <span data-translate="Add Skill">Add Skill</span></button>
+      <button class="admin-btn" onclick="openAddTool()"><i class="fas fa-plus"></i> <span data-translate="Add Tool">Add Tool</span></button>
+      <button class="admin-btn" onclick="openDeleteProject()"><i class="fas fa-trash"></i> <span data-translate="Delete Project">Delete Project</span></button>
+      <button class="admin-btn" onclick="openDeleteSkill()"><i class="fas fa-trash"></i> <span data-translate="Delete Skill">Delete Skill</span></button>
+      <button class="admin-btn" onclick="openDeleteTool()"><i class="fas fa-trash"></i> <span data-translate="Delete Tool">Delete Tool</span></button>
+      <button class="admin-btn" onclick="changeLogo()"><i class="fas fa-image"></i> <span data-translate="Change Logo">Change Logo</span></button>
+      <button class="admin-btn" onclick="changeAboutText()"><i class="fas fa-edit"></i> <span data-translate="Change About Text">Change About Text</span></button>
+      <button class="admin-btn full" onclick="enterEditMode()"><i class="fas fa-cogs"></i> <span data-translate="Control Site Live">Control Site Live</span></button>
+    </div>
+
+    <!-- Edit Mode Overlay -->
+    <div id="edit-mode-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; color: white; padding: 20px; overflow: auto;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h3>Live Edit Mode</h3>
+        <button class="btn" onclick="exitEditMode()">Exit Edit Mode</button>
+      </div>
+      <iframe id="site-frame" src="./" style="width: 100%; height: calc(100vh - 100px); border: 2px solid #00FFFF; border-radius: 10px;" sandbox="allow-same-origin allow-scripts"></iframe>
+    </div>
+
+    <!-- Forms will be shown via JS -->
+    <div id="admin-forms">
+      <!-- Add Project Form -->
+      <div id="form-add-project" style="display: none;">
+        <form id="form-project">
+          <input type="text" placeholder="Project Name" id="input-project-name" required />
+          <input type="url" placeholder="Project URL" id="input-project-link" required />
+          <div class="file-input">
+            <label for="input-project-image" data-translate="Upload Image">Upload Image</label>
+            <input type="file" id="input-project-image" accept="image/*" required />
+            <span id="image-filename">No file chosen</span>
+          </div>
+          <div class="file-input">
+            <label for="input-project-video" data-translate="Upload Video (optional)">Upload Video (optional)</label>
+            <input type="file" id="input-project-video" accept="video/*" />
+            <span id="video-filename">No file chosen</span>
+          </div>
+          <textarea placeholder="Short Description" id="input-project-desc" required></textarea>
+          <button type="submit" class="btn" data-translate="Save Project">Save Project</button>
+          <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
+        </form>
+      </div>
+
+      <!-- Add Skill Form -->
+      <div id="form-add-skill" style="display: none;">
+        <form id="form-skill">
+          <input type="text" placeholder="Skill Abbreviation (e.g. HTML)" id="input-skill-short" required />
+          <input type="text" placeholder="Full Name (e.g. HyperText Markup Language)" id="input-skill-full" required />
+          <textarea placeholder="Short Description" id="input-skill-desc" required></textarea>
+          <button type="submit" class="btn" data-translate="Add Skill">Add Skill</button>
+          <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
+        </form>
+      </div>
+
+      <!-- Add Tool Form -->
+      <div id="form-add-tool" style="display: none;">
+        <form id="form-tool">
+          <input type="text" placeholder="Tool Abbreviation (e.g. Git)" id="input-tool-short" required />
+          <input type="text" placeholder="Full Name (e.g. Version Control System)" id="input-tool-full" required />
+          <textarea placeholder="Short Description" id="input-tool-desc" required></textarea>
+          <button type="submit" class="btn" data-translate="Add Tool">Add Tool</button>
+          <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
+        </form>
+      </div>
+
+      <!-- Delete Lists -->
+      <div id="delete-sections" style="display: none;">
+        <div class="delete-list" id="delete-project-list">
+          <p data-translate="No projects to delete.">No projects to delete.</p>
+        </div>
+        <div class="delete-list" id="delete-skill-list">
+          <p data-translate="No skills to delete.">No skills to delete.</p>
+        </div>
+        <div class="delete-list" id="delete-tool-list">
+          <p data-translate="No tools to delete.">No tools to delete.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="closeAllForms()" data-translate="Back">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TikTok Notice Modal -->
+  <div class="modal" id="tiktok-modal" hidden>
+    <div class="modal-content">
+      <h4 data-translate="TikTok Service Notice">TikTok Service Notice</h4>
+      <p>
+        Dear Users,<br><br>
+        We regret to inform you that we have discontinued operating TikTok in Hong Kong.<br><br>
+        Thank you for the time you have spent with us on the platform and for giving us the opportunity to bring a little bit of joy into your life.<br><br>
+        The TikTok Team
+      </p>
+      <button class="btn" onclick="closeTikTokModal()" data-translate="Got It">Got It</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Action completed successfully!</div>
+
+  <!-- External JS -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>
