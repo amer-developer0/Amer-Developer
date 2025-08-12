@@ -11,7 +11,7 @@
 // =======================
 (function() {
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js    ';
   script.onload = () => {
     // Initialize EmailJS with your Public Key
     emailjs.init("uQBNWkfPWdDaF7vRL"); // ✅ Replace with your actual key
@@ -288,6 +288,10 @@ function setLanguage(lang) {
   renderDeleteProjectList();
   renderDeleteSkillList();
   renderDeleteToolList();
+
+  // ✅ إعادة توليد المهارات والأدوات عند تغيير اللغة
+  renderSkills();
+  renderTools();
 
   // Restart typing effect
   typeRole();
