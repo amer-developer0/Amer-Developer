@@ -1182,3 +1182,37 @@ html[dir="rtl"] {
     text-align: right;
   }
 }
+
+
+
+
+[dir="rtl"] .hero-content-wrapper {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+[dir="rtl"] .hero-text {
+  order: 2;
+  margin-right: 8%;
+  margin-left: 0;
+  text-align: right;
+}
+
+[dir="rtl"] .hero-avatar {
+  order: 1;
+  margin-left: 8%;
+  margin-right: 0;
+}
+
+[dir="rtl"] .social-icons-home {
+  justify-content: flex-end;
+}
+
+[dir="rtl"] .nav-list {
+  text-align: right;
+}
+
+[dir="rtl"] .contact-form-wrapper {
+  text-align: right;
+  direction: rtl;
+}
