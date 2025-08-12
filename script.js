@@ -348,7 +348,7 @@ function typeRole() {
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles[currentLang].length;
-    setTimeout(typeRole, 1500); // ✅ تأخير 1.5 ثانية قبل الكتابة التالية
+    setTimeout(typeRole, 3000); // ✅ تأخير 1.5 ثانية قبل الكتابة التالية
   } else {
     // ✅ الكتابة أبطأ: 250ms | المسح أسرع: 100ms
     const typingSpeed = 250;   // ✅ أبطأ (250ms بدل 150ms)
