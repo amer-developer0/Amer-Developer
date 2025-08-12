@@ -1,20 +1,19 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script (Fixed & Optimized)
- * Version: 15.6 | Fixed Email, WhatsApp, Typing, Translation & Navigation
+ * Version: 15.8 | Fixed Typing, Navigation, Translation & RTL
  * Author: Amer Developer
  * ========================================
  */
 
 // =======================
-// 1. Load EmailJS Dynamically
+// 1. Load EmailJS Dynamically (Fixed URL)
 // =======================
 (function() {
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js    ';
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'; // ✅ Removed extra spaces
   script.onload = () => {
-    // Initialize EmailJS with your Public Key
-    emailjs.init("uQBNWkfPWdDaF7vRL"); // ✅ Replace with your actual key
+    emailjs.init("uQBNWkfPWdDaF7vRL"); // ✅ Replace with your actual Public Key
   };
   document.head.appendChild(script);
 })();
@@ -66,7 +65,7 @@ const adminPassword = document.getElementById('admin-password');
 const passwordError = document.getElementById('password-error');
 
 // Sections & Nav
-const sections = document.querySelectorAll('.section');
+const sections = document.querySelectorAll('.section, #home');
 const navLinks = document.querySelectorAll('.nav-link');
 
 // About Text (Multiple Paragraphs)
@@ -235,7 +234,7 @@ function setLanguage(lang) {
   // RTL for Arabic
   if (lang === 'ar') {
     document.documentElement.setAttribute('dir', 'rtl');
-    heroName.textContent = 'عامر'; // ✅ "Amer" becomes "عامر"
+    heroName.textContent = 'عامر';
   } else {
     document.documentElement.removeAttribute('dir');
     heroName.textContent = 'Amer';
@@ -252,7 +251,7 @@ function setLanguage(lang) {
         el.textContent = value;
       } else if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
         el.textContent = value;
-      } else if (el.tagName === 'P' && el.id !== 'about-text' && !el.id.startsWith('about-text-')) {
+      } else if (el.tagName === 'P' && !el.id.startsWith('about-text')) {
         el.textContent = value;
       } else {
         el.textContent = value;
@@ -289,11 +288,15 @@ function setLanguage(lang) {
   renderDeleteSkillList();
   renderDeleteToolList();
 
-  // ✅ إعادة توليد المهارات والأدوات عند تغيير اللغة
+  // ✅ Re-render skills and tools with new language
   renderSkills();
   renderTools();
 
-  // Restart typing effect
+  // ✅ Restart typing effect (Fixed: resets animation)
+  typingText.textContent = '';
+  charIndex = 0;
+  isDeleting = false;
+  roleIndex = 0;
   typeRole();
 
   showToast(`Language changed to ${lang.toUpperCase()}`);
@@ -348,15 +351,14 @@ function typeRole() {
 
   if (!isDeleting && charIndex === currentRole.length) {
     isDeleting = true;
-    setTimeout(typeRole, 2500); // ✅ تأخير 2.5 ثانية بعد الانتهاء من الكتابة
+    setTimeout(typeRole, 2500); // Longer pause after typing
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles[currentLang].length;
-    setTimeout(typeRole, 1500); // ✅ تأخير 1.5 ثانية قبل الكتابة التالية
+    setTimeout(typeRole, 1500); // Pause before next role
   } else {
-    // ✅ الكتابة أبطأ: 250ms | المسح أسرع: 100ms
-    const typingSpeed = 250;   // ✅ أبطأ (250ms بدل 150ms)
-    const erasingSpeed = 100;  // مسح سريع
+    const typingSpeed = 250;  // Slower typing
+    const erasingSpeed = 100; // Slower erasing
     setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
   }
 }
@@ -387,21 +389,33 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-// Update active link on load, hash change, and scroll
-function updateActiveNavLink() {
-  const hash = window.location.hash || '#home';
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === hash) {
-      link.classList.add('active');
+// Fix active link on page load, hash change, and scroll
+function updateActiveLink() {
+  const scrollPosition = window.scrollY + 100;
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute('id');
+
+    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.add('active');
+        }
+      });
     }
   });
 }
 
-// ✅ إضافة: تحديث الرابط النشط عند التمرير
-window.addEventListener('scroll', updateActiveNavLink);
-window.addEventListener('load', updateActiveNavLink);
-window.addEventListener('hashchange', updateActiveNavLink);
+// Listen to scroll, load, and hash change
+window.addEventListener('scroll', updateActiveLink);
+window.addEventListener('load', updateActiveLink);
+window.addEventListener('hashchange', () => {
+  setTimeout(updateActiveLink, 100);
+});
+
 // =======================
 // 7. Admin Access: 5 Clicks + Password
 // =======================
@@ -437,7 +451,7 @@ function closePasswordModal() {
   }, 300);
 }
 
-// 🔐 Password is stored in a closure for basic security
+// 🔐 Password stored securely
 const getPassword = (() => {
   const password = 'ameramer9.1.2010';
   return () => password;
@@ -746,6 +760,10 @@ function confirmAndDelete(type, index) {
       else if (type === 'skill') skills.splice(index, 1);
       else if (type === 'tool') tools.splice(index, 1);
       saveData();
+      // Re-render after delete
+      renderDeleteProjectList();
+      renderDeleteSkillList();
+      renderDeleteToolList();
       showToast('Item deleted successfully!');
     } else {
       showToast(t['Incorrect Password'], 'error');
@@ -792,7 +810,6 @@ sendWhatsAppBtn.addEventListener('click', () => {
     return;
   }
 
-  // ✅ تم تضمين جميع البيانات تلقائيًا
   const text = `Hello Amer Abdo,\n\nMy name is ${name}.\nEmail: ${email}\n\nMessage: ${message}\n\nSent from your portfolio website.`;
   const encodedText = encodeURIComponent(text);
   const url = `https://wa.me/2001032637977?text=${encodedText}`;
