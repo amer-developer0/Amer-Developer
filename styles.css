@@ -1216,3 +1216,131 @@ html[dir="rtl"] {
   text-align: right;
   direction: rtl;
 }
+
+
+   /* =======================
+   RESPONSIVE DESIGN - Mobile & Tablet
+   ======================= */
+
+/* Mobile & Tablet */
+@media (max-width: 992px) {
+  .hero-content-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .hero-text {
+    margin-bottom: 3rem;
+    order: 1;
+  }
+
+  .hero-avatar {
+    order: 2;
+    margin: 0 auto;
+  }
+
+  .hero-title, .hero-subtitle, .hero-paragraph {
+    text-align: center;
+  }
+
+  .social-icons-home {
+    justify-content: center;
+  }
+
+  /* Sections */
+  .section {
+    padding: 4rem 0;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+  }
+}
+
+/* Small Mobile Phones (≤ 768px) */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0 1.5rem;
+    height: 60px;
+  }
+
+  .logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .nav-list {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+
+  .skills-grid, .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Extra Small Devices (≤ 480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.6rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+  }
+
+  .contact-form-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+/* RTL Support for Mobile */
+[dir="rtl"] .hero-content-wrapper {
+  text-align: right;
+}
+
+[dir="rtl"] .social-icons-home {
+  justify-content: flex-end;
+}
