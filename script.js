@@ -271,9 +271,9 @@ function setLanguage(lang) {
   }
 
   // Update Page Title
-  pageTitle.textContent = lang === 'ar' 
-    ? 'عامر المطور | بناء المستقبل الرقمي بالكود والإبداع' 
-    : 'Amer Developer | Building Digital Futures with Code & Creativity';
+pageTitle.textContent = lang === 'ar' 
+  ? 'عامر المطور | حلول برمجية مبتكرة لمستقبل رقمي متطور' 
+  : 'Amer Developer | Innovative Software Solutions for an Advanced Digital Future';
 
   // Update active language in menu
   document.querySelectorAll('#language-menu li').forEach(li => {
