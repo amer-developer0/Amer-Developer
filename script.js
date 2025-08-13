@@ -326,7 +326,7 @@ document.querySelectorAll('#language-menu li').forEach(li => {
 });
 
 // =======================
-// 5. Typing Animation (Slower)
+// Typing Animation (with pause after full text)
 // =======================
 const roles = {
   en: ['Front-end Developer', 'Back-end Developer', 'Full-stack Developer'],
@@ -350,20 +350,26 @@ function typeRole() {
   }
 
   if (!isDeleting && charIndex === currentRole.length) {
-    isDeleting = true;
-    setTimeout(typeRole, 2500); // Longer pause after typing
-  } else if (isDeleting && charIndex === 0) {
+    // كلمة كاملة -> انتظر 1 ثانية قبل المسح
+    setTimeout(() => {
+      isDeleting = true;
+      typeRole();
+    }, 1000); // ← المدة اللي الكلمة تفضل فيها كاملة قبل المسح
+    return; // نوقف هنا لحد ما الوقفة تخلص
+  }
+
+  if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles[currentLang].length;
-    setTimeout(typeRole, 1500); // Pause before next role
-  } else {
-    const typingSpeed = 250;  // Slower typing
-    const erasingSpeed = 100; // Slower erasing
-    setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
+    setTimeout(typeRole, 1500); // وقفة قبل بدء الكلمة الجديدة
+    return;
   }
+
+  const typingSpeed = 250;  // سرعة الكتابة
+  const erasingSpeed = 100; // سرعة المسح
+  setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
 }
 
-// Start typing after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(typeRole, 500);
 });
