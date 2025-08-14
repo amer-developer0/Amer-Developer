@@ -963,3 +963,32 @@ function setupAvatarClick() {
 
 // --- تشغيل النظام بعد تحميل الصفحة ---
 document.addEventListener('DOMContentLoaded', setupAvatarClick);
+
+
+
+
+// --- ✅ دمج التمرير الأفقي + اختفاء الهيدر على الموبايل ---
+let lastScrollTop = 0;
+const header = document.querySelector('.main-header');
+
+if (header) {
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    // نطبق النظام فقط على الشاشات الصغيرة
+    if (window.innerWidth > 768) {
+      header.classList.remove('header-hidden');
+      return;
+    }
+
+    if (currentScroll > lastScrollTop && currentScroll > 100) {
+      // نازل للأسفل → أخفي الهيدر
+      header.classList.add('header-hidden');
+    } else {
+      // صاعد للأعلى → أظهر الهيدر
+      header.classList.remove('header-hidden');
+    }
+
+    lastScrollTop = currentScroll;
+  });
+}
