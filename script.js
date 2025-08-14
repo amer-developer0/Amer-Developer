@@ -798,12 +798,14 @@ sendEmailBtn.addEventListener('click', async () => {
   }
 
   try {
-    await emailjs.send("service_do0surt", "template_z7acl2q", {
-      name, email, message
+    // ✅ استخدام البيانات الجديدة من EmailJS
+    await emailjs.sendForm('amer_service_id', 'template_ngw74td', contactForm, {
+      publicKey: 'uQBNWkfPWdDaF7vRL',
     });
     showToast(translations[currentLang]['Success Email'], 'success');
     contactForm.reset();
   } catch (err) {
+    console.error('EmailJS Error:', err);
     showToast(translations[currentLang]['Error Network'], 'error');
   }
 });
