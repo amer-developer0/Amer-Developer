@@ -7,19 +7,56 @@
  */
 
 // =======================
-// 1. Load EmailJS Dynamically (Fixed URL)
+// Load EmailJS Dynamically & Send Email
 // =======================
 (function() {
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = () => {
     console.log('EmailJS library loaded successfully');
+
+    // تهيئة EmailJS بالمفتاح العام
+    emailjs.init('uQBNWkfPWdDaF7vRL');
+
+    // ربط زر الإرسال بوظيفة الإرسال
+    document.getElementById('send-email').addEventListener('click', function(event) {
+      event.preventDefault(); // منع إعادة تحميل الصفحة
+
+      // قراءة القيم من الحقول
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // التحقق من أن الحقول مش فاضية
+      if (!name || !email || !message) {
+        alert('من فضلك املأ كل الحقول قبل الإرسال.');
+        return;
+      }
+
+      // إرسال البيانات عبر EmailJS
+      emailjs.send('amer_service_id', 'template_ngw74td', {
+        from_name: name,
+        from_email: email,
+        message: message
+      })
+      .then(function(response) {
+        console.log('تم الإرسال بنجاح!', response.status, response.text);
+        alert('تم الإرسال بنجاح!');
+        // إعادة تعيين الحقول بعد الإرسال
+        document.getElementById('contact-form').reset();
+      }, function(error) {
+        console.error('فشل الإرسال...', error);
+        alert('حدث خطأ أثناء الإرسال. تأكد من الاتصال بالإنترنت.');
+      });
+    });
+
   };
   script.onerror = () => {
-    console.error('Failed to load EmailJS library');
+    console.error('فشل تحميل مكتبة EmailJS');
   };
   document.head.appendChild(script);
 })();
+
 // =======================
 // 2. DOM Elements
 // =======================
