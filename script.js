@@ -5,51 +5,67 @@
  * Author: Amer Developer
  * ========================================
  */
-// دالة مساعدة للترجمة
-function t(key) {
-  return translations[currentLang][key] || key;
-}
+// تأكد إنك ضايف مكتبة EmailJS
+<script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+<script type="text/javascript">
+  emailjs.init('YOUR_PUBLIC_KEY'); // غيره بمفتاحك
 
-document.getElementById('send-email').addEventListener('click', function(event) {
-  event.preventDefault();
+  const translations = {
+    ar: {
+      'Error Fill Fields': 'من فضلك املأ كل الحقول قبل الإرسال.',
+      'Email Success': 'تم الإرسال بنجاح، سيتم التواصل معك عبر البريد الإلكتروني خلال 24 ساعة',
+      'Email Error': 'تعذر إرسال الرسالة. تحقق من اتصالك بالإنترنت.',
+      'Send via Email': 'إرسال عبر البريد الإلكتروني',
+    },
+    en: {
+      'Error Fill Fields': 'Please fill in all fields before sending.',
+      'Email Success': 'Message sent successfully! I will contact you via email within 24 hours.',
+      'Email Error': 'Failed to send message. Check your internet connection.',
+      'Send via Email': 'Send via Email',
+    }
+  };
 
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+  let currentLang = 'ar';
 
-  if (!name || !email || !message) {
-    alert(t('Error Fill Fields')); // نص تعبئة الحقول
-    return;
+  function t(key) {
+    return translations[currentLang][key] || key;
   }
 
-  const btn = document.getElementById('send-email');
-  btn.disabled = true;
+  document.getElementById('send-email').addEventListener('click', function(event) {
+    event.preventDefault();
 
-  emailjs.send('amer_service_id', 'template_ngw74td', {
-    from_name: name,
-    from_email: email,
-    message: message
-  })
-  .then(function(response) {
-    alert(t('Success Email')); // رسالة النجاح القديمة
-    document.getElementById('contact-form').reset();
-  })
-  .catch(function(error) {
-    console.error('فشل الإرسال:', error);
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-    // إذا كان الخطأ من الشبكة
-    if (!navigator.onLine) {
-      alert(t('Error Network'));
-    } else {
-      alert(t('Error')); // رسالة الفشل العامة
+    if (!name || !email || !message) {
+      alert(t('Error Fill Fields'));
+      return;
     }
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.textContent = t('Send via Email'); // إعادة النص الأصلي للزر
-  });
-});
 
+    const btn = document.getElementById('send-email');
+    btn.disabled = true;
+    btn.textContent = t('Send via Email');
+
+    emailjs.send('amer_service_id', 'template_ngw74td', {
+      from_name: name,
+      from_email: email,
+      message: message
+    })
+    .then(function(response) {
+      alert(t('Email Success'));
+      document.getElementById('contact-form').reset();
+    })
+    .catch(function(error) {
+      console.error('فشل الإرسال:', error);
+      alert(t('Email Error'));
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = t('Send via Email');
+    });
+  });
+</script>
 // =======================
 // 2. DOM Elements
 // =======================
