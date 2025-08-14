@@ -1160,3 +1160,10 @@ html[dir="rtl"] {
 [dir="rtl"] .social-icons-home {
   justify-content: center;
 }
+
+
+
+/* --- تعديل: يخلي عنوان القسم يظهر كامل لما تنتقل للقسم --- */
+section[id] {
+  scroll-margin-top: 70px;
+}
