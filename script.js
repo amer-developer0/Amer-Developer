@@ -5,54 +5,49 @@
  * Author: Amer Developer
  * ========================================
  */
-// =======================
-// 15. Contact Form - Enhanced Email Sending
-// =======================
-sendEmailBtn.addEventListener('click', async () => {
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const message = messageInput.value.trim();
+// دالة مساعدة للترجمة
+function t(key) {
+  return translations[currentLang][key] || key;
+}
 
-  // تعطيل الزر وتغيير النص
-  sendEmailBtn.disabled = true;
-  const originalText = sendEmailBtn.innerHTML;
-  sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-  setLanguage(currentLang); // لتحديث النص الجديد
+document.getElementById('send-email').addEventListener('click', function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
 
   if (!name || !email || !message) {
-    showToast(translations[currentLang]['Error'], 'error');
-    sendEmailBtn.disabled = false;
-    sendEmailBtn.innerHTML = originalText;
-    setLanguage(currentLang);
+    alert(t('Error Fill Fields')); // نص تعبئة الحقول
     return;
   }
 
-  if (!isValidEmail(email)) {
-    showToast(translations[currentLang]['Error Invalid Email'], 'error');
-    sendEmailBtn.disabled = false;
-    sendEmailBtn.innerHTML = originalText;
-    setLanguage(currentLang);
-    return;
-  }
+  const btn = document.getElementById('send-email');
+  btn.disabled = true;
 
-  try {
-    // إرسال الرسالة
-    await emailjs.sendForm('amer_service_id', 'template_ngw74td', contactForm, {
-      publicKey: 'uQBNWkfPWdDaF7vRL',
-    });
+  emailjs.send('amer_service_id', 'template_ngw74td', {
+    from_name: name,
+    from_email: email,
+    message: message
+  })
+  .then(function(response) {
+    alert(t('Success Email')); // رسالة النجاح القديمة
+    document.getElementById('contact-form').reset();
+  })
+  .catch(function(error) {
+    console.error('فشل الإرسال:', error);
 
-    // نجاح الإرسال
-    showToast(translations[currentLang]['Success Email'], 'success');
-    contactForm.reset();
-  } catch (err) {
-    console.error('EmailJS Error:', err);
-    showToast(translations[currentLang]['Error Network'], 'error');
-  } finally {
-    // إعادة الزر لحالته الطبيعية
-    sendEmailBtn.disabled = false;
-    sendEmailBtn.innerHTML = originalText;
-    setLanguage(currentLang);
-  }
+    // إذا كان الخطأ من الشبكة
+    if (!navigator.onLine) {
+      alert(t('Error Network'));
+    } else {
+      alert(t('Error')); // رسالة الفشل العامة
+    }
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.textContent = t('Send via Email'); // إعادة النص الأصلي للزر
+  });
 });
 
 // =======================
