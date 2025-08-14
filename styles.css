@@ -1165,5 +1165,5 @@ html[dir="rtl"] {
 
 /* --- تعديل: يخلي عنوان القسم يظهر كامل لما تنتقل للقسم --- */
 section[id] {
-  scroll-margin-top: 70px;
+  scroll-margin-top: 50px;
 }
