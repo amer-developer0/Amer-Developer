@@ -11,13 +11,15 @@
 // =======================
 (function() {
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'; // ✅ Removed extra spaces
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = () => {
-    
+    console.log('EmailJS library loaded successfully');
+  };
+  script.onerror = () => {
+    console.error('Failed to load EmailJS library');
   };
   document.head.appendChild(script);
 })();
-
 // =======================
 // 2. DOM Elements
 // =======================
