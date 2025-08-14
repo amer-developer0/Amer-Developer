@@ -6,6 +6,11 @@
  * ========================================
  */
 
+// دالة مساعدة للترجمة
+function t(key) {
+  return translations[currentLang][key] || key;
+}
+
 document.getElementById('send-email').addEventListener('click', function(event) {
   event.preventDefault();
 
@@ -14,12 +19,12 @@ document.getElementById('send-email').addEventListener('click', function(event) 
   const message = document.getElementById('message').value.trim();
 
   if (!name || !email || !message) {
-    alert('من فضلك املأ كل الحقول قبل الإرسال.');
+    alert(t('Error Fill Fields'));
     return;
   }
 
-  // رسالة التحميل أو الانتظار اختيارية
-  // console.log('جاري الإرسال...');
+  const btn = document.getElementById('send-email');
+  btn.disabled = true;
 
   emailjs.send('amer_service_id', 'template_ngw74td', {
     from_name: name,
@@ -27,11 +32,20 @@ document.getElementById('send-email').addEventListener('click', function(event) 
     message: message
   })
   .then(function(response) {
-    alert('تم الإرسال بنجاح!');
+    alert(t('Success Email'));
     document.getElementById('contact-form').reset();
-  }, function(error) {
-    console.error('فشل الإرسال...', error);
-    alert('حدث خطأ أثناء الإرسال. تأكد من الاتصال بالإنترنت.');
+  })
+  .catch(function(error) {
+    console.error('فشل الإرسال:', error);
+    if (!navigator.onLine) {
+      alert(t('Error Network'));
+    } else {
+      alert(t('Email Error'));
+    }
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.textContent = t('Send via Email');
   });
 });
 // =======================
