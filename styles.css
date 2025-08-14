@@ -1167,3 +1167,12 @@ html[dir="rtl"] {
 section[id] {
   scroll-margin-top: 50px;
 }
+
+
+
+/* --- إخفاء اللوجو في الشريط العلوي على الموبايل --- */
+@media (max-width: 768px) {
+  .main-header .logo {
+    display: none !important;
+  }
+}
