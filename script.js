@@ -107,6 +107,7 @@ const translations = {
     'Building digital solutions': 'أبني حلولًا رقمية تساعدك على الظهور بشكل احترافي وفعّال في السوق الرقمي',
     'About Me': 'من أنا',
     'My Skills': 'مهاراتي',
+    'My Tools': 'الأدوات',
     'Latest Projects': 'أحدث المشاريع',
     'Contact Me': 'اتصل بي',
     'Your Name': 'اسمك',
