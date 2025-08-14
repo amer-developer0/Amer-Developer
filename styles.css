@@ -1176,3 +1176,46 @@ section[id] {
     display: none !important;
   }
 }
+
+
+
+
+/* --- قائمة الموبايل: تمرير أفقي + اختفاء عند النزول --- */
+@media (max-width: 768px) {
+  .main-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: var(--accent-teal) transparent;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: max-content;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+  }
+
+  /* إخفاء السكرول بار */
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* تقليل الهوامش */
+  .main-header {
+    padding: 0 1rem;
+  }
+}
