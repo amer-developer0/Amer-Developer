@@ -169,6 +169,7 @@ const translations = {
     'Building digital solutions': 'I build digital solutions that help you appear professionally and effectively in the digital market',
     'About Me': 'About Me',
     'My Skills': 'My Skills',
+    'My Tools': 'My Tools',
     'Latest Projects': 'Latest Projects',
     'Contact Me': 'Contact Me',
     'Your Name': 'Your Name',
