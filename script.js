@@ -929,3 +929,36 @@ if (savedLogo) logoImg.src = savedLogo;
 
 const savedAbout = localStorage.getItem('about-text');
 if (savedAbout) aboutText.textContent = savedAbout;
+
+
+// --- متغيرات للنقر على الصورة ---
+const heroAvatar = document.querySelector('.hero-avatar');
+let mobileClickCount = 0;
+let lastMobileClickTime = 0;
+
+// --- إضافة حدث النقر على الصورة الكبيرة فقط على الموبايل ---
+function setupAvatarClick() {
+  if (!heroAvatar) return;
+
+  heroAvatar.addEventListener('click', () => {
+    // تأكد أن العرض على شاشة صغيرة (موبايل)
+    if (window.innerWidth > 768) return;
+
+    const now = Date.now();
+    if (now - lastMobileClickTime < 2000) {
+      mobileClickCount++;
+    } else {
+      mobileClickCount = 1;
+    }
+    lastMobileClickTime = now;
+
+    if (mobileClickCount >= 5) {
+      openPasswordModal();
+      mobileClickCount = 0;
+      showToast('Admin access triggered via avatar!');
+    }
+  });
+}
+
+// --- تشغيل النظام بعد تحميل الصفحة ---
+document.addEventListener('DOMContentLoaded', setupAvatarClick);
