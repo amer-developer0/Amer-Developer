@@ -1219,3 +1219,18 @@ section[id] {
     padding: 0 1rem;
   }
 }
+
+
+
+
+.main-header {
+  position: fixed;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
+  /* باقي الخصائص موجودة فعلاً */
+}
+
+/* ✅ الكلاس الجديد: يخفي الهيدر لما تمرّر للأسفل */
+.header-hidden {
+  transform: translateY(-100%);
+}
