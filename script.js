@@ -13,7 +13,7 @@
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'; // ✅ Removed extra spaces
   script.onload = () => {
-    emailjs.init("uQBNWkfPWdDaF7vRL"); // ✅ Replace with your actual Public Key
+    
   };
   document.head.appendChild(script);
 })();
