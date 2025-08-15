@@ -8,24 +8,7 @@
 // =======================
 // 1. Load EmailJS Dynamically (Without init)
 // =======================
-function loadEmailJS(callback) {
-  if (window.emailjs) {
-    console.log('EmailJS library already loaded');
-    callback();
-    return;
-  }
 
-  const script = document.createElement('script');
- script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-  script.onload = () => {
-    console.log('EmailJS library loaded successfully');
-    callback();
-  };
-  script.onerror = () => {
-    console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
-  };
-  document.head.appendChild(script);
-}
 // =======================
 // 2. DOM Elements
 // =======================
