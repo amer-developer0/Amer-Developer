@@ -793,6 +793,12 @@ function confirmAndDelete(type, index) {
 // =======================
 // 15. Contact Form - Enhanced Email Sending
 // =======================
+function isValidEmail(email) {
+  // Regex للتحقق من الإيميل
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
 loadEmailJS(() => {
   sendEmailBtn.addEventListener('click', async () => {
     const name = nameInput.value.trim();
