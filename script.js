@@ -793,27 +793,31 @@ function confirmAndDelete(type, index) {
 // 15. Contact Form - Enhanced Email Sending
 // =======================
 loadEmailJS(() => {
+  emailjs.init('jJN8oiyOifT9GDBoS'); // تهيئة المفتاح العام
 
-  // دالة التحقق من صحة الإيميل
+  const contactForm = document.getElementById('contactForm');
+  const sendEmailBtn = document.getElementById('sendEmailBtn');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
+
   function isValidEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
 
   sendEmailBtn.addEventListener('click', async (e) => {
-     e.preventDefault(); // منع إعادة تحميل الصفحة أو تشغيل أكشن تاني
+    e.preventDefault();
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const message = messageInput.value.trim();
 
-    // تعطيل الزر وتغيير النص
     sendEmailBtn.disabled = true;
     const originalText = sendEmailBtn.innerHTML;
     sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-    setLanguage(currentLang); // لتحديث النص الجديد
+    setLanguage(currentLang);
 
-    // التحقق من الحقول
     if (!name || !email || !message) {
       showToast(translations[currentLang]['Error'], 'error');
       sendEmailBtn.disabled = false;
@@ -831,24 +835,18 @@ loadEmailJS(() => {
     }
 
     try {
-      // إرسال الرسالة عبر EmailJS
-      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
-  publicKey: 'jJN8oiyOifT9GDBoS',
-});
-      // نجاح الإرسال
+      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm);
       showToast(translations[currentLang]['Success Email'], 'success');
       contactForm.reset();
     } catch (err) {
       console.error('EmailJS Error:', err);
       showToast(translations[currentLang]['Error Network'], 'error');
     } finally {
-      // إعادة الزر لحالته الطبيعية
       sendEmailBtn.disabled = false;
       sendEmailBtn.innerHTML = originalText;
       setLanguage(currentLang);
     }
   });
-
 });
 
 // =======================
