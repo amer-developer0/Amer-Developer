@@ -16,7 +16,7 @@ function loadEmailJS(callback) {
   }
 
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+ script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = () => {
     console.log('EmailJS library loaded successfully');
     callback();
