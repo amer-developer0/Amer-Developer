@@ -16,7 +16,7 @@ function loadEmailJS(callback) {
   }
 
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'; // ✅ تمت إزالة المسافات الزائدة
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = () => {
     console.log('EmailJS library loaded successfully');
     callback();
@@ -26,7 +26,6 @@ function loadEmailJS(callback) {
   };
   document.head.appendChild(script);
 }
-
 // =======================
 // 2. DOM Elements
 // =======================
@@ -801,7 +800,8 @@ loadEmailJS(() => {
     return emailPattern.test(email);
   }
 
-
+  sendEmailBtn.addEventListener('click', async (e) => {
+     e.preventDefault(); // منع إعادة تحميل الصفحة أو تشغيل أكشن تاني
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
