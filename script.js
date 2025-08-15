@@ -1,10 +1,10 @@
 /**
  * ========================================
- * 🚀 Amer Developer Portfolio - FINAL Working Script (Fixed & Optimized)
+ * 🚀 Amer Developer Portfolio - FINAL Working Script
  * Version: 15.8 | Fixed Typing, Navigation, Translation & RTL
  * Author: Amer Developer
  * ========================================
- // 
+ */
 // =======================
 // 1. Load EmailJS Dynamically (Without init)
 // =======================
@@ -22,7 +22,7 @@ function loadEmailJS(callback) {
     callback();
   };
   script.onerror = () => {
-    console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
+    console.error('Failed to load EmailJS library. Please check your internet connection, ad blockers, or try again.');
   };
   document.head.appendChild(script);
 }
