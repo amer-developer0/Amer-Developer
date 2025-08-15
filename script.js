@@ -792,77 +792,82 @@ function confirmAndDelete(type, index) {
 // =======================
 // 15. Contact Form - Enhanced Email Sending
 // =======================
-loadEmailJS(() => {
-  // ✅ تأكد من أن العناصر بالـ id الصحيحة من الـ HTML
-  const contactForm = document.getElementById('contact-form');
-  const sendEmailBtn = document.getElementById('send-email');
-  const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const messageInput = document.getElementById('message');
+document.addEventListener('DOMContentLoaded', () => {
+  loadEmailJS(() => {
+    // ✅ التأكد من أن العناصر موجودة في DOM
+    const contactForm = document.getElementById('contact-form');
+    const sendEmailBtn = document.getElementById('send-email');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
 
-  // دالة التحقق من الإيميل
-  function isValidEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-  }
-
-  // إضافة حدث النقر
-  sendEmailBtn.addEventListener('click', async (e) => {
-    e.preventDefault(); // منع إعادة التحميل
-
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const message = messageInput.value.trim();
-
-    // حفظ النص الأصلي للزر
-    const originalText = sendEmailBtn.innerHTML;
-
-    // تعطيل الزر وتغيير النص إلى "جارٍ الإرسال"
-    sendEmailBtn.disabled = true;
-    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-    setLanguage(currentLang); // تحديث الترجمة
-
-    // التحقق من الحقول
-    if (!name || !email || !message) {
-      showToast(translations[currentLang]['Error'], 'error');
-      sendEmailBtn.disabled = false;
-      sendEmailBtn.innerHTML = originalText;
-      setLanguage(currentLang);
+    // ⚠️ التحقق من أن العناصر محملة
+    if (!contactForm || !sendEmailBtn || !nameInput || !emailInput || !messageInput) {
+      console.error('❌ أحد عناصر النموذج غير موجود في الصفحة. تأكد من الـ id في الـ HTML.');
       return;
     }
 
-    if (!isValidEmail(email)) {
-      showToast(translations[currentLang]['Error Invalid Email'], 'error');
-      sendEmailBtn.disabled = false;
-      sendEmailBtn.innerHTML = originalText;
-      setLanguage(currentLang);
-      return;
+    // دالة التحقق من صحة البريد الإلكتروني
+    function isValidEmail(email) {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(email);
     }
 
-    try {
-      // ⏳ هنا يبدأ الإرسال فعليًا
-      // الزر يبقى "مُعطّل" لحد ما الطلب يكمل (ناجح أو فاشل)
-      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
-        publicKey: 'jJN8oiyOifT9GDBoS'
-      });
+    // إضافة حدث النقر على زر الإرسال
+    sendEmailBtn.addEventListener('click', async (e) => {
+      e.preventDefault(); // منع إعادة التحميل
 
-      // ✅ إذا نجح الإرسال
-      showToast(translations[currentLang]['Success Email'], 'success');
-      contactForm.reset();
-    } catch (err) {
-      // ❌ إذا فشل (انترنت، خطأ في البيانات، حظر من AdBlock)
-      console.error('EmailJS Error:', err);
-      showToast(translations[currentLang]['Error Network'], 'error');
-    } finally {
-      // ✅ هذا الجزء يُنفّذ دايمًا (سواء نجح أو فشل)
-      // إعادة الزر لحالته الطبيعية
-      sendEmailBtn.disabled = false;
-      sendEmailBtn.innerHTML = originalText;
-      setLanguage(currentLang);
-    }
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const message = messageInput.value.trim();
+
+      // حفظ النص الأصلي للزر
+      const originalText = sendEmailBtn.innerHTML;
+
+      // تعطيل الزر وتغيير النص إلى "جارٍ الإرسال"
+      sendEmailBtn.disabled = true;
+      sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
+      setLanguage(currentLang); // تحديث الترجمة
+
+      // التحقق من الحقول
+      if (!name || !email || !message) {
+        showToast(translations[currentLang]['Error'], 'error');
+        sendEmailBtn.disabled = false;
+        sendEmailBtn.innerHTML = originalText;
+        setLanguage(currentLang);
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        showToast(translations[currentLang]['Error Invalid Email'], 'error');
+        sendEmailBtn.disabled = false;
+        sendEmailBtn.innerHTML = originalText;
+        setLanguage(currentLang);
+        return;
+      }
+
+      try {
+        // ✅ الإرسال الفعلي عبر EmailJS
+        await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
+          publicKey: 'jJN8oiyOifT9GDBoS'
+        });
+
+        // ✅ نجاح الإرسال
+        showToast(translations[currentLang]['Success Email'], 'success');
+        contactForm.reset();
+      } catch (err) {
+        // ❌ فشل الإرسال
+        console.error('EmailJS Error:', err);
+        showToast(translations[currentLang]['Error Network'], 'error');
+      } finally {
+        // ✅ إعادة الزر لحالته الطبيعية بعد الانتهاء (نجاح أو فشل)
+        sendEmailBtn.disabled = false;
+        sendEmailBtn.innerHTML = originalText;
+        setLanguage(currentLang);
+      }
+    });
   });
 });
-
         
 // =======================
 // 16. Admin Forms
