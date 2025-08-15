@@ -833,10 +833,9 @@ loadEmailJS(() => {
 
     try {
       // إرسال الرسالة عبر EmailJS
-      await emailjs.sendForm('amer_service_id', 'template_ngw74td', contactForm, {
-        publicKey: 'uQBNWkfPWdDaF7vRL',
-      });
-
+      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
+  publicKey: 'jJN8oiyOifT9GDBoS',
+});
       // نجاح الإرسال
       showToast(translations[currentLang]['Success Email'], 'success');
       contactForm.reset();
