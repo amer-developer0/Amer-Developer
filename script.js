@@ -4,7 +4,7 @@
  * Version: 15.8 | Fixed Typing, Navigation, Translation & RTL
  * Author: Amer Developer
  * ========================================
- */
+ // 
 // =======================
 // 1. Load EmailJS Dynamically (Without init)
 // =======================
@@ -793,14 +793,17 @@ function confirmAndDelete(type, index) {
 // =======================
 // 15. Contact Form - Enhanced Email Sending
 // =======================
-function isValidEmail(email) {
-  // Regex للتحقق من الإيميل
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
-}
-
 loadEmailJS(() => {
-  sendEmailBtn.addEventListener('click', async () => {
+
+  // دالة التحقق من صحة الإيميل
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
+  sendEmailBtn.addEventListener('click', async (e) => {
+    e.preventDefault(); // منع إعادة تحميل الصفحة أو تشغيل أكشن تاني
+
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const message = messageInput.value.trim();
@@ -847,6 +850,7 @@ loadEmailJS(() => {
       setLanguage(currentLang);
     }
   });
+
 });
 
 // =======================
