@@ -801,8 +801,7 @@ loadEmailJS(() => {
     return emailPattern.test(email);
   }
 
-  sendEmailBtn.addEventListener('click', async (e) => {
-    e.preventDefault(); // منع إعادة تحميل الصفحة أو تشغيل أكشن تاني
+
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
