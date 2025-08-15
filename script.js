@@ -5,6 +5,27 @@
  * Author: Amer Developer
  * ========================================
  */
+// =======================
+// 1. Load EmailJS Dynamically (Without init)
+// =======================
+function loadEmailJS(callback) {
+  if (window.emailjs) {
+    console.log('EmailJS library already loaded');
+    callback();
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  script.onload = () => {
+    console.log('EmailJS library loaded successfully');
+    callback();
+  };
+  script.onerror = () => {
+    console.error('Failed to load EmailJS library');
+  };
+  document.head.appendChild(script);
+}
 
 // =======================
 // 2. DOM Elements
@@ -770,58 +791,57 @@ function confirmAndDelete(type, index) {
 }
 
 // =======================
-// 15. Contact Form
+// 15. Contact Form - Enhanced Email Sending
 // =======================
-sendEmailBtn.addEventListener('click', async () => {
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const message = messageInput.value.trim();
+loadEmailJS(() => {
+  sendEmailBtn.addEventListener('click', async () => {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
 
-  if (!name || !email || !message) {
-    showToast(translations[currentLang]['Error'], 'error');
-    return;
-  }
+    // تعطيل الزر وتغيير النص
+    sendEmailBtn.disabled = true;
+    const originalText = sendEmailBtn.innerHTML;
+    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
+    setLanguage(currentLang); // لتحديث النص الجديد
 
-  if (!isValidEmail(email)) {
-    showToast(translations[currentLang]['Error Invalid Email'], 'error');
-    return;
-  }
+    // التحقق من الحقول
+    if (!name || !email || !message) {
+      showToast(translations[currentLang]['Error'], 'error');
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.innerHTML = originalText;
+      setLanguage(currentLang);
+      return;
+    }
 
-  try {
-    // ✅ استخدام البيانات الجديدة من EmailJS
-    await emailjs.sendForm('amer_service_id', 'template_ngw74td', contactForm, {
-      publicKey: 'uQBNWkfPWdDaF7vRL',
-    });
-    showToast(translations[currentLang]['Success Email'], 'success');
-    contactForm.reset();
-  } catch (err) {
-    console.error('EmailJS Error:', err);
-    showToast(translations[currentLang]['Error Network'], 'error');
-  }
+    if (!isValidEmail(email)) {
+      showToast(translations[currentLang]['Error Invalid Email'], 'error');
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.innerHTML = originalText;
+      setLanguage(currentLang);
+      return;
+    }
+
+    try {
+      // إرسال الرسالة عبر EmailJS
+      await emailjs.sendForm('amer_service_id', 'template_ngw74td', contactForm, {
+        publicKey: 'uQBNWkfPWdDaF7vRL',
+      });
+
+      // نجاح الإرسال
+      showToast(translations[currentLang]['Success Email'], 'success');
+      contactForm.reset();
+    } catch (err) {
+      console.error('EmailJS Error:', err);
+      showToast(translations[currentLang]['Error Network'], 'error');
+    } finally {
+      // إعادة الزر لحالته الطبيعية
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.innerHTML = originalText;
+      setLanguage(currentLang);
+    }
+  });
 });
-
-sendWhatsAppBtn.addEventListener('click', () => {
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const message = messageInput.value.trim();
-
-  if (!name || !email || !message) {
-    showToast(translations[currentLang]['Error'], 'error');
-    return;
-  }
-
-  const text = `Hello Amer Abdo,\n\nMy name is ${name}.\nEmail: ${email}\n\nMessage: ${message}\n\nSent from your portfolio website.`;
-  const encodedText = encodeURIComponent(text);
-  const url = `https://wa.me/2001032637977?text=${encodedText}`;
-
-  window.open(url, '_blank');
-  showToast(translations[currentLang]['Success WhatsApp'], 'success');
-  contactForm.reset();
-});
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
 // =======================
 // 16. Admin Forms
