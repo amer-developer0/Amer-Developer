@@ -22,7 +22,7 @@ function loadEmailJS(callback) {
     callback();
   };
   script.onerror = () => {
-    console.error('Failed to load EmailJS library. Please check your internet connection, ad blockers, or try again.');
+    console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
   };
   document.head.appendChild(script);
 }
@@ -827,7 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // تعطيل الزر وتغيير النص إلى "جارٍ الإرسال"
       sendEmailBtn.disabled = true;
       sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-      setLanguage(currentLang); // تحديث الترجمة
+      setLanguage(currentLang); // لتحديث النص الجديد
 
       // التحقق من الحقول
       if (!name || !email || !message) {
@@ -849,7 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         // ✅ الإرسال الفعلي عبر EmailJS
         await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
-          publicKey: 'jJN8oiyOifT9GDBoS'
+          publicKey: 'y0arGSpBI2RpLMhnt' // ✅ المفتاح العام الصحيح من لوحة التحكم
         });
 
         // ✅ نجاح الإرسال
