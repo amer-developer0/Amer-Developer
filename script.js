@@ -16,13 +16,13 @@ function loadEmailJS(callback) {
   }
 
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'; // ✅ تمت إزالة المسافات الزائدة
   script.onload = () => {
     console.log('EmailJS library loaded successfully');
     callback();
   };
   script.onerror = () => {
-    console.error('Failed to load EmailJS library');
+    console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
   };
   document.head.appendChild(script);
 }
