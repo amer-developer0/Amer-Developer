@@ -793,31 +793,36 @@ function confirmAndDelete(type, index) {
 // 15. Contact Form - Enhanced Email Sending
 // =======================
 loadEmailJS(() => {
-  emailjs.init('jJN8oiyOifT9GDBoS'); // تهيئة المفتاح العام
-
-  const contactForm = document.getElementById('contactForm');
-  const sendEmailBtn = document.getElementById('sendEmailBtn');
+  // ✅ تأكد من أن العناصر بالـ id الصحيحة من الـ HTML
+  const contactForm = document.getElementById('contact-form');
+  const sendEmailBtn = document.getElementById('send-email');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
 
+  // دالة التحقق من الإيميل
   function isValidEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
 
+  // إضافة حدث النقر
   sendEmailBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // منع إعادة التحميل
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const message = messageInput.value.trim();
 
-    sendEmailBtn.disabled = true;
+    // حفظ النص الأصلي للزر
     const originalText = sendEmailBtn.innerHTML;
-    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-    setLanguage(currentLang);
 
+    // تعطيل الزر وتغيير النص إلى "جارٍ الإرسال"
+    sendEmailBtn.disabled = true;
+    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
+    setLanguage(currentLang); // تحديث الترجمة
+
+    // التحقق من الحقول
     if (!name || !email || !message) {
       showToast(translations[currentLang]['Error'], 'error');
       sendEmailBtn.disabled = false;
@@ -835,13 +840,22 @@ loadEmailJS(() => {
     }
 
     try {
-      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm);
+      // ⏳ هنا يبدأ الإرسال فعليًا
+      // الزر يبقى "مُعطّل" لحد ما الطلب يكمل (ناجح أو فاشل)
+      await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
+        publicKey: 'jJN8oiyOifT9GDBoS'
+      });
+
+      // ✅ إذا نجح الإرسال
       showToast(translations[currentLang]['Success Email'], 'success');
       contactForm.reset();
     } catch (err) {
+      // ❌ إذا فشل (انترنت، خطأ في البيانات، حظر من AdBlock)
       console.error('EmailJS Error:', err);
       showToast(translations[currentLang]['Error Network'], 'error');
     } finally {
+      // ✅ هذا الجزء يُنفّذ دايمًا (سواء نجح أو فشل)
+      // إعادة الزر لحالته الطبيعية
       sendEmailBtn.disabled = false;
       sendEmailBtn.innerHTML = originalText;
       setLanguage(currentLang);
@@ -849,6 +863,7 @@ loadEmailJS(() => {
   });
 });
 
+        
 // =======================
 // 16. Admin Forms
 // =======================
