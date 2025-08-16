@@ -19,10 +19,10 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" />
 
   <!-- Google Fonts -->
-  <link href="  https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="    https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css  " crossorigin="anonymous" />
+  <link rel="stylesheet" href="    https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css    " crossorigin="anonymous" />
 
   <!-- External CSS -->
   <link rel="stylesheet" href="styles.css" />
@@ -64,12 +64,18 @@
       <ul class="nav-list">
         <li class="nav-item"><a href="#home" class="nav-link active" data-translate="home">Home</a></li>
         <li class="nav-item"><a href="#about" class="nav-link" data-translate="about">About</a></li>
+        <li class="nav-item"><a href="#services" class="nav-link" data-translate="services">Services</a></li>
         <li class="nav-item"><a href="#skills" class="nav-link" data-translate="skills">Skills</a></li>
         <li class="nav-item"><a href="#tools" class="nav-link" data-translate="tools">Tools</a></li>
         <li class="nav-item"><a href="#projects" class="nav-link" data-translate="projects">Projects</a></li>
         <li class="nav-item"><a href="#contact" class="nav-link" data-translate="contact">Contact</a></li>
       </ul>
     </nav>
+
+    <!-- Order Service Button -->
+    <button id="order-service-btn" class="btn btn-order" style="display: none;">
+      <i class="fas fa-shopping-cart"></i> <span data-translate="Order Service">Order Service</span>
+    </button>
   </header>
 
   <!-- Main Content -->
@@ -94,13 +100,13 @@
 
           <!-- Social Icons Below Button -->
           <div class="social-icons-home" data-animation="fade-in" style="animation-delay: 0.8s;">
-            <a href="https://github.com/Amer-Developer1  " target="_blank" rel="noopener" aria-label="GitHub">
+            <a href="https://github.com/Amer-Developer1    " target="_blank" rel="noopener" aria-label="GitHub">
               <i class="fab fa-github fa-lg"></i>
             </a>
-            <a href="https://www.instagram.com/amer.developer  " target="_blank" rel="noopener" aria-label="Instagram">
+            <a href="https://www.instagram.com/amer.developer    " target="_blank" rel="noopener" aria-label="Instagram">
               <i class="fab fa-instagram fa-lg"></i>
             </a>
-            <a href="https://wa.me/2001032637977  " target="_blank" rel="noopener" aria-label="WhatsApp">
+            <a href="https://wa.me/2001032637977    " target="_blank" rel="noopener" aria-label="WhatsApp">
               <i class="fab fa-whatsapp fa-lg"></i>
             </a>
           </div>
@@ -127,6 +133,29 @@
           <p id="about-text-3">
             I always strive to improve my skills and add new technologies to my toolkit, aiming to deliver the highest possible value to every client. I believe that the success of any project starts with a clear understanding of the goal and vision, then transforming them into a digital product that achieves the desired outcome efficiently and professionally.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services-section" data-section="services">
+      <div class="container">
+        <h2 class="section-title" data-animation="slide-up" data-translate="My Services">My Services</h2>
+        <p class="section-description" data-translate="I offer professional development services tailored to your needs." style="text-align: center; color: var(--text-gray); margin-bottom: var(--space-xl);">
+          I offer professional development services tailored to your needs.
+        </p>
+        <div class="services-grid" id="services-grid">
+          <!-- Filled via JS -->
+        </div>
+
+        <!-- Action Buttons (Visible only in selection mode) -->
+        <div id="services-actions" style="display: none; text-align: center; margin-top: var(--space-lg);">
+          <button id="cancel-selection" class="btn btn-secondary">
+            <i class="fas fa-times"></i> <span data-translate="Cancel Selection">Cancel Selection</span>
+          </button>
+          <button id="confirm-order" class="btn btn-primary" style="margin-left: 1rem;">
+            <i class="fas fa-check"></i> <span data-translate="Confirm Order">Confirm Order</span>
+          </button>
         </div>
       </div>
     </section>
@@ -169,7 +198,7 @@
       <div class="container">
         <h2 class="section-title" data-animation="slide-up" data-translate="Contact Me">Contact Me</h2>
         <div class="contact-form-wrapper">
-          <form id="contact-form" class="contact-form" action="https://formspree.io/f/xdkdjqzo" method="POST" novalidate>
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/xdkdjqzo  " method="POST" novalidate>
             <div class="form-group">
               <label for="name" data-translate="Your Name">Your Name</label>
               <input type="text" id="name" name="name" required autocomplete="name" />
@@ -207,22 +236,22 @@
 
           <!-- All Social Links in Contact Section -->
           <div class="social-links-contact">
-            <a href="https://github.com/Amer-Developer1  " target="_blank" rel="noopener">
+            <a href="https://github.com/Amer-Developer1    " target="_blank" rel="noopener">
               <i class="fab fa-github"></i> GitHub
             </a>
-            <a href="https://www.facebook.com/amer.developer  " target="_blank" rel="noopener">
+            <a href="https://www.facebook.com/amer.developer    " target="_blank" rel="noopener">
               <i class="fab fa-facebook"></i> Facebook
             </a>
-            <a href="https://tiktok.com/@amer.developer8  " target="_blank" rel="noopener" onclick="showTikTokNotice(); return false;">
+            <a href="https://tiktok.com/@amer.developer8    " target="_blank" rel="noopener" onclick="showTikTokNotice(); return false;">
               <i class="fab fa-tiktok"></i> TikTok
             </a>
-            <a href="https://www.instagram.com/amer.developer  " target="_blank" rel="noopener">
+            <a href="https://www.instagram.com/amer.developer    " target="_blank" rel="noopener">
               <i class="fab fa-instagram"></i> Instagram
             </a>
-            <a href="https://twitter.com/amer_developer  " target="_blank" rel="noopener">
+            <a href="https://twitter.com/amer_developer    " target="_blank" rel="noopener">
               <i class="fab fa-twitter"></i> Twitter
             </a>
-            <a href="https://wa.me/2001032637977  " target="_blank" rel="noopener">
+            <a href="https://wa.me/2001032637977    " target="_blank" rel="noopener">
               <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
           </div>
@@ -238,7 +267,7 @@
       <div class="footer-content">
         <p>&copy; <span id="year">2025</span> Amer Developer. All rights reserved.</p>
         <p>Email: <a href="mailto:iamamer030@gmail.com">iamamer030@gmail.com</a></p>
-        <p>Phone (WhatsApp only): <a href="https://wa.me/2001032637977  ">+20 010 3263 7977</a></p>
+        <p>Phone (WhatsApp only): <a href="https://wa.me/2001032637977    ">+20 010 3263 7977</a></p>
       </div>
     </div>
   </footer>
