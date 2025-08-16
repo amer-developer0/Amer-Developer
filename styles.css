@@ -1,7 +1,7 @@
 /* ========================================
    🎨 FULL-STACK PORTFOLIO - STYLESHEET (Final Fixed Version)
    Author: Amer Developer
-   Version: 15.5 | Fixed Nav, Translation, Mobile, Email & WhatsApp
+   Version: 15.6 | Added Services Section Styles
    ======================================== */
 
 :root {
@@ -380,6 +380,31 @@ strong { color: var(--accent-teal); }
   width: 100%;
 }
 
+/* Order Service Button */
+#order-service-btn {
+  background: #FFD700;
+  color: #000033;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+#order-service-btn:hover {
+  background: #FFC400;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+#order-service-btn:active {
+  transform: translateY(0);
+}
+
 /* Sections */
 .section {
   padding: var(--space-2xl) 0;
@@ -398,15 +423,15 @@ strong { color: var(--accent-teal); }
   animation: fadeInUp 0.8s ease forwards;
 }
 
-/* Skills & Tools */
-.skills-grid, .tools-grid {
+/* Skills & Tools & Services */
+.skills-grid, .tools-grid, .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--space-md);
   margin-top: var(--space-lg);
 }
 
-.skill-card, .tool-card {
+.skill-card, .tool-card, .service-card {
   background: rgba(0, 0, 51, 0.7);
   border: 1px solid var(--border-light);
   border-radius: var(--border-radius-md);
@@ -419,21 +444,34 @@ strong { color: var(--accent-teal); }
   backdrop-filter: blur(5px);
 }
 
-.skill-card:hover, .tool-card:hover {
+.skill-card:hover, .tool-card:hover, .service-card:hover {
   transform: translateY(-10px);
   border-color: var(--accent-teal);
   box-shadow: var(--shadow-md);
 }
 
-.skill-card h3, .tool-card h3 {
+.skill-card h3, .tool-card h3, .service-card h3 {
   font-size: var(--font-size-xl);
   color: var(--accent-teal);
   margin-bottom: var(--space-sm);
 }
 
-.skill-card p, .tool-card p {
+.skill-card p, .tool-card p, .service-card p {
   font-size: var(--font-size-sm);
   color: var(--text-gray-light);
+}
+
+/* Service Card - Selectable State */
+.service-card.selectable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.service-card.selectable.selected {
+  border: 3px solid var(--accent-teal);
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px var(--accent-teal-glow), 0 0 0 3px var(--accent-teal);
+  background: rgba(0, 255, 255, 0.1);
 }
 
 /* Tooltip */
@@ -471,7 +509,7 @@ strong { color: var(--accent-teal); }
   border-bottom: 8px solid var(--accent-teal);
 }
 
-.skill-card:hover .tooltip, .tool-card:hover .tooltip {
+.skill-card:hover .tooltip, .tool-card:hover .tooltip, .service-card:hover .tooltip {
   opacity: 1;
   visibility: visible;
 }
@@ -1126,6 +1164,11 @@ html[dir="rtl"] {
 
   .admin-btn.full {
     grid-column: span 1;
+  }
+
+  #order-service-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
   }
 }
 
