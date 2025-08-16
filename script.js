@@ -858,11 +858,12 @@ function confirmAndDelete(type, index) {
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   const sendEmailBtn = document.getElementById('send-email');
+  const sendWhatsAppBtn = document.getElementById('send-whatsapp'); // ✅ أضفنا الزر
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
 
-  if (!contactForm || !sendEmailBtn || !nameInput || !emailInput || !messageInput) {
+  if (!contactForm || !sendEmailBtn || !sendWhatsAppBtn || !nameInput || !emailInput || !messageInput) {
     console.error('❌ أحد عناصر النموذج غير موجود في الصفحة.');
     return;
   }
@@ -872,6 +873,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return emailPattern.test(email);
   }
 
+  // Send via Email
   sendEmailBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -891,7 +893,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // تغيير نص الزر إلى "جارٍ الإرسال"
     sendEmailBtn.disabled = true;
     sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
     const sendingSpan = sendEmailBtn.querySelector('span');
@@ -922,7 +923,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Formspree Error:', err);
       showToast(translations[currentLang]['Error Network'], 'error');
     } finally {
-      // إعادة الزر لحالته الطبيعية
       sendEmailBtn.disabled = false;
       sendEmailBtn.innerHTML = originalText;
       const finalSpan = sendEmailBtn.querySelector('span');
@@ -930,6 +930,24 @@ document.addEventListener('DOMContentLoaded', () => {
         finalSpan.textContent = translations[currentLang]['Send via Email'];
       }
     }
+  });
+
+  // ✅ Send via WhatsApp
+  sendWhatsAppBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !message) {
+      showToast(translations[currentLang]['Error'], 'error');
+      return;
+    }
+
+    const whatsappMessage = `مرحبًا، أنا ${name}${email ? ' (بريد: ' + email + ')' : ''}\n\n${message}\n\n--\nمن موقع Amer Developer`;
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/201032637977?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
   });
 });
 
