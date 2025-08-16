@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script
- * Version: 16.1 | Added Services Section with Order Flow
+ * Version: 16.2 | Fixed Services Selection & Translation
  * Author: Amer Developer
  * ========================================
  */
@@ -760,11 +760,14 @@ function renderProjects() {
   });
 }
 
+// =======================
+// Render Services
+// =======================
 function renderServices() {
   servicesGrid.innerHTML = '';
   services.forEach(service => {
     const card = document.createElement('div');
-    card.className = 'service-card selectable';
+    card.className = 'service-card'; // ✅ لا يوجد selectable من البداية
     const descKey = service.desc;
     const desc = translations[currentLang][descKey];
     const name = translations[currentLang][service.name];
@@ -772,11 +775,7 @@ function renderServices() {
       <h3>${name}</h3>
       <p>${desc}</p>
     `;
-    card.addEventListener('click', () => {
-      if (card.classList.contains('selectable')) {
-        card.classList.toggle('selected');
-      }
-    });
+    // ✅ لا يوجد event listener هنا
     servicesGrid.appendChild(card);
   });
 }
@@ -1091,18 +1090,23 @@ if (header) {
 // 21. Services Section Logic
 // =======================
 orderServiceBtn.addEventListener('click', () => {
-  // Enable selection mode
+  // تمكين وضع التحديد
   document.querySelectorAll('.service-card').forEach(card => {
     card.classList.add('selectable');
     card.classList.remove('selected');
+    card.onclick = () => {
+      card.classList.toggle('selected');
+    };
   });
   servicesActions.style.display = 'block';
   orderServiceBtn.style.display = 'none';
 });
 
 cancelSelection.addEventListener('click', () => {
+  // إلغاء التحديد وعودة الكروت لطبيعتها
   document.querySelectorAll('.service-card').forEach(card => {
-    card.classList.remove('selected');
+    card.classList.remove('selectable', 'selected');
+    card.onclick = null;
   });
   servicesActions.style.display = 'none';
   orderServiceBtn.style.display = 'inline-flex';
@@ -1128,16 +1132,20 @@ confirmOrder.addEventListener('click', () => {
     message = messages.join('\n\n');
   }
 
-  // Scroll to contact section
+  // الانتقال لقسم تواصل معي
   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
 
-  // Fill message
+  // ملء الرسالة
   messageInput.value = message;
 
-  // Show toast
+  // إظهار رسالة
   showToast('Service request ready! Please fill your name and email.', 'success');
 
-  // Exit selection mode
+  // الخروج من وضع الاختيار
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.classList.remove('selectable', 'selected');
+    card.onclick = null;
+  });
   servicesActions.style.display = 'none';
   orderServiceBtn.style.display = 'inline-flex';
 });
