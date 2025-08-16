@@ -858,11 +858,12 @@ function confirmAndDelete(type, index) {
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   const sendEmailBtn = document.getElementById('send-email');
-  const sendWhatsAppBtn = document.getElementById('send-whatsapp'); // ✅ أضفنا الزر
+  const sendWhatsAppBtn = document.getElementById('send-whatsapp');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
 
+  // ✅ تأكد أن كل العناصر موجودة
   if (!contactForm || !sendEmailBtn || !sendWhatsAppBtn || !nameInput || !emailInput || !messageInput) {
     console.error('❌ أحد عناصر النموذج غير موجود في الصفحة.');
     return;
@@ -873,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return emailPattern.test(email);
   }
 
-  // Send via Email
+  // ✅ Send via Email (Formspree)
   sendEmailBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -893,6 +894,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // تغيير نص الزر
     sendEmailBtn.disabled = true;
     sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
     const sendingSpan = sendEmailBtn.querySelector('span');
@@ -943,14 +945,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const whatsappMessage = `مرحبًا، أنا ${name}${email ? ' (بريد: ' + email + ')' : ''}\n\n${message}\n\n--\nمن موقع Amer Developer`;
+    // ✅ الصيغة الجديدة للرسالة
+    let whatsappMessage = `Hello Amer Abdo,\n\n`;
+    whatsappMessage += `My name is ${name}:\n`;
+    whatsappMessage += `Email: ${email}\n\n`;
+    whatsappMessage += `Message: ${message}\n\n`;
+    whatsappMessage += `Sent from your portfolio website.`;
+
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappUrl = `https://wa.me/201032637977?text=${encodedMessage}`;
 
     window.open(whatsappUrl, '_blank');
   });
 });
-
 // =======================
 // 16. Admin Forms
 // =======================
