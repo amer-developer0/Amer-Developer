@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script
- * Version: 15.8 | Fixed Typing, Navigation, Translation & RTL
+ * Version: 15.9 | Fixed Email Sending & UI Feedback
  * Author: Amer Developer
  * ========================================
  */
@@ -23,9 +23,11 @@ function loadEmailJS(callback) {
   };
   script.onerror = () => {
     console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
+    showToast('Failed to load email service. Please try again later.', 'error');
   };
   document.head.appendChild(script);
 }
+
 // =======================
 // 2. DOM Elements
 // =======================
@@ -243,7 +245,6 @@ function setLanguage(lang) {
   localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
 
-  // RTL for Arabic
   if (lang === 'ar') {
     document.documentElement.setAttribute('dir', 'rtl');
     heroName.textContent = 'عامر';
@@ -252,7 +253,6 @@ function setLanguage(lang) {
     heroName.textContent = 'Amer';
   }
 
-  // Update all translatable elements
   document.querySelectorAll('[data-translate]').forEach(el => {
     const key = el.getAttribute('data-translate');
     if (translations[lang][key]) {
@@ -271,7 +271,6 @@ function setLanguage(lang) {
     }
   });
 
-  // Special case: About Text (Multiple Paragraphs)
   if (lang === 'ar') {
     aboutText.textContent = 'مرحبًا، أنا عامر من مصر 🇪🇬، مطوّر ويب ومبرمج مهتم بتحويل الأفكار إلى حلول رقمية عملية وفعّالة. بدأت رحلتي في عالم البرمجة بالتعلّم الذاتي، ومع كل مشروع أنجزه أكتسب خبرة أعمق ورؤية أوسع.';
     aboutText2.textContent = 'أعمل على تصميم وبرمجة مواقع عصرية متجاوبة وسهلة الاستخدام، مع التركيز على تجربة المستخدم وأدق التفاصيل. أتقن استخدام HTML، CSS، وJavaScript لتطوير واجهات احترافية، بالإضافة إلى Python لبناء أدوات وتطبيقات ذكية.';
@@ -282,29 +281,23 @@ function setLanguage(lang) {
     aboutText3.textContent = 'I always strive to improve my skills and add new technologies to my toolkit, aiming to deliver the highest possible value to every client. I believe that the success of any project starts with a clear understanding of the goal and vision, then transforming them into a digital product that achieves the desired outcome efficiently and professionally.';
   }
 
-  // Update Page Title
-pageTitle.textContent = lang === 'ar' 
-  ? 'عامر المطور | حلول برمجية مبتكرة لمستقبل رقمي متطور' 
-  : 'Amer Developer | Innovative Software Solutions for an Advanced Digital Future';
+  pageTitle.textContent = lang === 'ar' 
+    ? 'عامر المطور | حلول برمجية مبتكرة لمستقبل رقمي متطور' 
+    : 'Amer Developer | Innovative Software Solutions for an Advanced Digital Future';
 
-  // Update active language in menu
   document.querySelectorAll('#language-menu li').forEach(li => {
     li.classList.toggle('active', li.dataset.lang === lang);
   });
 
-  // Close menu
   languageMenu.hidden = true;
 
-  // Re-render lists
   renderDeleteProjectList();
   renderDeleteSkillList();
   renderDeleteToolList();
 
-  // ✅ Re-render skills and tools with new language
   renderSkills();
   renderTools();
 
-  // ✅ Restart typing effect (Fixed: resets animation)
   typingText.textContent = '';
   charIndex = 0;
   isDeleting = false;
@@ -314,12 +307,10 @@ pageTitle.textContent = lang === 'ar'
   showToast(`Language changed to ${lang.toUpperCase()}`);
 }
 
-// Initialize language
 document.addEventListener('DOMContentLoaded', () => {
   setLanguage(currentLang);
 });
 
-// Language Switcher
 languageSwitcher.addEventListener('click', (e) => {
   e.stopPropagation();
   languageMenu.hidden = !languageMenu.hidden;
@@ -338,7 +329,7 @@ document.querySelectorAll('#language-menu li').forEach(li => {
 });
 
 // =======================
-// Typing Animation (with pause after full text)
+// Typing Animation
 // =======================
 const roles = {
   en: ['Front-end Developer', 'Back-end Developer', 'Full-stack Developer'],
@@ -362,23 +353,22 @@ function typeRole() {
   }
 
   if (!isDeleting && charIndex === currentRole.length) {
-    // كلمة كاملة -> انتظر 1 ثانية قبل المسح
     setTimeout(() => {
       isDeleting = true;
       typeRole();
-    }, 1000); // ← المدة اللي الكلمة تفضل فيها كاملة قبل المسح
-    return; // نوقف هنا لحد ما الوقفة تخلص
+    }, 1000);
+    return;
   }
 
   if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles[currentLang].length;
-    setTimeout(typeRole, 1500); // وقفة قبل بدء الكلمة الجديدة
+    setTimeout(typeRole, 1500);
     return;
   }
 
-  const typingSpeed = 250;  // سرعة الكتابة
-  const erasingSpeed = 100; // سرعة المسح
+  const typingSpeed = 250;
+  const erasingSpeed = 100;
   setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
 }
 
@@ -387,13 +377,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =======================
-// 6. Scroll Animations & Active Nav (FIXED)
+// 6. Scroll Animations & Active Nav
 // =======================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      // Update active nav link
       const id = entry.target.id;
       navLinks.forEach(link => {
         link.classList.remove('active');
@@ -407,7 +396,6 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-// Fix active link on page load, hash change, and scroll
 function updateActiveLink() {
   const scrollPosition = window.scrollY + 100;
 
@@ -427,7 +415,6 @@ function updateActiveLink() {
   });
 }
 
-// Listen to scroll, load, and hash change
 window.addEventListener('scroll', updateActiveLink);
 window.addEventListener('load', updateActiveLink);
 window.addEventListener('hashchange', () => {
@@ -435,7 +422,7 @@ window.addEventListener('hashchange', () => {
 });
 
 // =======================
-// 7. Admin Access: 5 Clicks + Password
+// 7. Admin Access
 // =======================
 let clickCount = 0;
 let lastClickTime = 0;
@@ -469,7 +456,6 @@ function closePasswordModal() {
   }, 300);
 }
 
-// 🔐 Password stored securely
 const getPassword = (() => {
   const password = 'ameramer9.1.2010';
   return () => password;
@@ -494,7 +480,6 @@ function toggleAdminPanel() {
   adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
 }
 
-// Escape Key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (!passwordModal.hidden) closePasswordModal();
@@ -778,7 +763,6 @@ function confirmAndDelete(type, index) {
       else if (type === 'skill') skills.splice(index, 1);
       else if (type === 'tool') tools.splice(index, 1);
       saveData();
-      // Re-render after delete
       renderDeleteProjectList();
       renderDeleteSkillList();
       renderDeleteToolList();
@@ -790,51 +774,44 @@ function confirmAndDelete(type, index) {
 }
 
 // =======================
-// 15. Contact Form - Enhanced Email Sending
+// 15. Contact Form - Enhanced Email Sending (FIXED)
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
   loadEmailJS(() => {
-    // ✅ التأكد من أن العناصر موجودة في DOM
     const contactForm = document.getElementById('contact-form');
     const sendEmailBtn = document.getElementById('send-email');
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const messageInput = document.getElementById('message');
 
-    // ⚠️ التحقق من أن العناصر محملة
     if (!contactForm || !sendEmailBtn || !nameInput || !emailInput || !messageInput) {
       console.error('❌ أحد عناصر النموذج غير موجود في الصفحة. تأكد من الـ id في الـ HTML.');
       return;
     }
 
-    // دالة التحقق من صحة البريد الإلكتروني
     function isValidEmail(email) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(email);
     }
 
-    // إضافة حدث النقر على زر الإرسال
     sendEmailBtn.addEventListener('click', async (e) => {
-      e.preventDefault(); // منع إعادة التحميل
+      e.preventDefault();
 
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
       const message = messageInput.value.trim();
 
-      // حفظ النص الأصلي للزر
       const originalText = sendEmailBtn.innerHTML;
 
-      // تعطيل الزر وتغيير النص إلى "جارٍ الإرسال"
       sendEmailBtn.disabled = true;
       sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-      setLanguage(currentLang); // لتحديث النص الجديد
+      const sendingSpan = sendEmailBtn.querySelector('span');
+      sendingSpan.textContent = translations[currentLang]['Sending...'];
 
-      // التحقق من الحقول
       if (!name || !email || !message) {
         showToast(translations[currentLang]['Error'], 'error');
         sendEmailBtn.disabled = false;
         sendEmailBtn.innerHTML = originalText;
-        setLanguage(currentLang);
         return;
       }
 
@@ -842,33 +819,31 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(translations[currentLang]['Error Invalid Email'], 'error');
         sendEmailBtn.disabled = false;
         sendEmailBtn.innerHTML = originalText;
-        setLanguage(currentLang);
         return;
       }
 
       try {
-        // ✅ الإرسال الفعلي عبر EmailJS
         await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
-          publicKey: 'y0arGSpBI2RpLMhnt' // ✅ المفتاح العام الصحيح من لوحة التحكم
+          publicKey: 'y0arGSpBI2RpLMhnt'
         });
 
-        // ✅ نجاح الإرسال
         showToast(translations[currentLang]['Success Email'], 'success');
         contactForm.reset();
       } catch (err) {
-        // ❌ فشل الإرسال
         console.error('EmailJS Error:', err);
         showToast(translations[currentLang]['Error Network'], 'error');
       } finally {
-        // ✅ إعادة الزر لحالته الطبيعية بعد الانتهاء (نجاح أو فشل)
         sendEmailBtn.disabled = false;
         sendEmailBtn.innerHTML = originalText;
-        setLanguage(currentLang);
+        const finalSpan = sendEmailBtn.querySelector('span');
+        if (finalSpan) {
+          finalSpan.textContent = translations[currentLang]['Send via Email'];
+        }
       }
     });
   });
 });
-        
+
 // =======================
 // 16. Admin Forms
 // =======================
@@ -955,7 +930,6 @@ function closeTikTokModal() {
 // =======================
 yearSpan.textContent = new Date().getFullYear();
 
-// Close TikTok modal on click outside
 window.addEventListener('click', (e) => {
   if (e.target === tiktokModal) closeTikTokModal();
 });
@@ -969,7 +943,6 @@ if (savedLogo) logoImg.src = savedLogo;
 const savedAbout = localStorage.getItem('about-text');
 if (savedAbout) aboutText.textContent = savedAbout;
 
-
 // --- متغيرات للنقر على الصورة ---
 const heroAvatar = document.querySelector('.hero-avatar');
 let mobileClickCount = 0;
@@ -980,7 +953,6 @@ function setupAvatarClick() {
   if (!heroAvatar) return;
 
   heroAvatar.addEventListener('click', () => {
-    // تأكد أن العرض على شاشة صغيرة (موبايل)
     if (window.innerWidth > 768) return;
 
     const now = Date.now();
@@ -1002,9 +974,6 @@ function setupAvatarClick() {
 // --- تشغيل النظام بعد تحميل الصفحة ---
 document.addEventListener('DOMContentLoaded', setupAvatarClick);
 
-
-
-
 // --- ✅ دمج التمرير الأفقي + اختفاء الهيدر على الموبايل ---
 let lastScrollTop = 0;
 const header = document.querySelector('.main-header');
@@ -1013,17 +982,14 @@ if (header) {
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
 
-    // نطبق النظام فقط على الشاشات الصغيرة
     if (window.innerWidth > 768) {
       header.classList.remove('header-hidden');
       return;
     }
 
     if (currentScroll > lastScrollTop && currentScroll > 100) {
-      // نازل للأسفل → أخفي الهيدر
       header.classList.add('header-hidden');
     } else {
-      // صاعد للأعلى → أظهر الهيدر
       header.classList.remove('header-hidden');
     }
 
