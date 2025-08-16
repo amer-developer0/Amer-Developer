@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script
- * Version: 16.2 | Fixed Services Selection & Translation
+ * Version: 16.3 | Fixed DOMContentLoaded & Contact Form
  * Author: Amer Developer
  * ========================================
  */
@@ -327,10 +327,6 @@ function setLanguage(lang) {
   showToast(`Language changed to ${lang.toUpperCase()}`);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  setLanguage(currentLang);
-});
-
 languageSwitcher.addEventListener('click', (e) => {
   e.stopPropagation();
   languageMenu.hidden = !languageMenu.hidden;
@@ -391,10 +387,6 @@ function typeRole() {
   const erasingSpeed = 100;
   setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(typeRole, 500);
-});
 
 // =======================
 // 6. Scroll Animations & Active Nav
@@ -767,7 +759,7 @@ function renderServices() {
   servicesGrid.innerHTML = '';
   services.forEach(service => {
     const card = document.createElement('div');
-    card.className = 'service-card'; // ✅ لا يوجد selectable من البداية
+    card.className = 'service-card';
     const descKey = service.desc;
     const desc = translations[currentLang][descKey];
     const name = translations[currentLang][service.name];
@@ -775,7 +767,6 @@ function renderServices() {
       <h3>${name}</h3>
       <p>${desc}</p>
     `;
-    // ✅ لا يوجد event listener هنا
     servicesGrid.appendChild(card);
   });
 }
@@ -856,6 +847,9 @@ function confirmAndDelete(type, index) {
 // 15. Contact Form - Formspree Integration
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
+  // ✅ تأكد من تعيين اللغة أولًا
+  setLanguage(currentLang);
+
   const contactForm = document.getElementById('contact-form');
   const sendEmailBtn = document.getElementById('send-email');
   const sendWhatsAppBtn = document.getElementById('send-whatsapp');
@@ -863,7 +857,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
 
-  // ✅ تأكد أن كل العناصر موجودة
   if (!contactForm || !sendEmailBtn || !sendWhatsAppBtn || !nameInput || !emailInput || !messageInput) {
     console.error('❌ أحد عناصر النموذج غير موجود في الصفحة.');
     return;
@@ -874,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return emailPattern.test(email);
   }
 
-  // ✅ Send via Email (Formspree)
+  // Send via Email
   sendEmailBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -894,7 +887,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // تغيير نص الزر
     sendEmailBtn.disabled = true;
     sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
     const sendingSpan = sendEmailBtn.querySelector('span');
@@ -934,7 +926,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ✅ Send via WhatsApp
+  // Send via WhatsApp
   sendWhatsAppBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -945,7 +937,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // ✅ الصيغة الجديدة للرسالة
     let whatsappMessage = `Hello Amer Abdo,\n\n`;
     whatsappMessage += `My name is ${name}:\n`;
     whatsappMessage += `Email: ${email}\n\n`;
@@ -958,6 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.open(whatsappUrl, '_blank');
   });
 });
+
 // =======================
 // 16. Admin Forms
 // =======================
