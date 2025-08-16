@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script
- * Version: 16.0 | Replaced EmailJS with Formspree
+ * Version: 16.1 | Added Services Section with Order Flow
  * Author: Amer Developer
  * ========================================
  */
@@ -46,6 +46,7 @@ const skillsGrid = document.getElementById('skills-grid');
 const toolsGrid = document.getElementById('tools-grid');
 const projectsGrid = document.getElementById('projects-grid');
 const projectsEmpty = document.getElementById('projects-empty');
+const servicesGrid = document.getElementById('services-grid');
 
 // Modals
 const tiktokModal = document.getElementById('tiktok-modal');
@@ -79,6 +80,12 @@ const deleteSections = document.getElementById('delete-sections');
 // Page Title
 const pageTitle = document.querySelector('title');
 
+// Services Section Elements
+const orderServiceBtn = document.getElementById('order-service-btn');
+const servicesActions = document.getElementById('services-actions');
+const cancelSelection = document.getElementById('cancel-selection');
+const confirmOrder = document.getElementById('confirm-order');
+
 // =======================
 // 3. Translation System
 // =======================
@@ -88,6 +95,7 @@ const translations = {
     about: 'من أنا',
     skills: 'المهارات',
     tools: 'الأدوات',
+    services: 'الخدمات',
     projects: 'المشاريع',
     contact: 'اتصل بي',
     'More About Me': 'مزيد من التفاصيل',
@@ -96,6 +104,7 @@ const translations = {
     'About Me': 'من أنا',
     'My Skills': 'مهاراتي',
     'My Tools': 'الأدوات',
+    'My Services': 'خدماتي',
     'Latest Projects': 'أحدث المشاريع',
     'Contact Me': 'اتصل بي',
     'Your Name': 'اسمك',
@@ -144,13 +153,28 @@ const translations = {
     'Change About Text': 'تغيير نص "من أنا"',
     'Control Site Live': 'التحكم المباشر في الموقع',
     'No projects added yet.': 'لم تُضف مشاريع بعد.',
-    'Back': 'العودة'
+    'Back': 'العودة',
+    'Order Service': 'اطلب خدمة',
+    'Cancel Selection': 'إلغاء التحديد',
+    'Confirm Order': 'تأكيد الطلب',
+    'Service Selected': 'تم تحديد خدمة واحدة',
+    'Services Selected': 'تم تحديد %d خدمات',
+    'Please select at least one service': 'يرجى تحديد خدمة واحدة على الأقل',
+    'Landing Pages': 'صفحات الهبوط',
+    'Websites': 'مواقع الويب',
+    'Python Scripts': 'سكربتات بايثون',
+    'Support & Maintenance': 'الدعم والصيانة',
+    'Landing Pages Desc': 'تصميم صفحات هبوط احترافية لزيادة التحويلات والتفاعل.',
+    'Websites Desc': 'تطوير مواقع ويب حديثة وسريعة وسهلة الاستخدام.',
+    'Python Scripts Desc': 'كتابة سكربتات بايثون لأتمتة المهام وتحليل البيانات.',
+    'Support & Maintenance Desc': 'دعم فني وصيانة دورية لضمان استقرار موقعك.'
   },
   en: {
     home: 'Home',
     about: 'About',
     skills: 'Skills',
     tools: 'Tools',
+    services: 'Services',
     projects: 'Projects',
     contact: 'Contact',
     'More About Me': 'More About Me',
@@ -159,6 +183,7 @@ const translations = {
     'About Me': 'About Me',
     'My Skills': 'My Skills',
     'My Tools': 'My Tools',
+    'My Services': 'My Services',
     'Latest Projects': 'Latest Projects',
     'Contact Me': 'Contact Me',
     'Your Name': 'Your Name',
@@ -207,7 +232,21 @@ const translations = {
     'Change About Text': 'Change About Text',
     'Control Site Live': 'Control Site Live',
     'No projects added yet.': 'No projects added yet.',
-    'Back': 'Back'
+    'Back': 'Back',
+    'Order Service': 'Order Service',
+    'Cancel Selection': 'Cancel Selection',
+    'Confirm Order': 'Confirm Order',
+    'Service Selected': '1 service selected',
+    'Services Selected': '%d services selected',
+    'Please select at least one service': 'Please select at least one service',
+    'Landing Pages': 'Landing Pages',
+    'Websites': 'Websites',
+    'Python Scripts': 'Python Scripts',
+    'Support & Maintenance': 'Support & Maintenance',
+    'Landing Pages Desc': 'Professional landing pages to increase conversions and engagement.',
+    'Websites Desc': 'Modern, fast, and user-friendly websites.',
+    'Python Scripts Desc': 'Python scripts for automation and data analysis.',
+    'Support & Maintenance Desc': 'Technical support and regular maintenance for stability.'
   }
 };
 
@@ -275,6 +314,7 @@ function setLanguage(lang) {
 
   renderSkills();
   renderTools();
+  renderServices();
 
   typingText.textContent = '';
   let charIndex = 0;
@@ -368,6 +408,13 @@ const observer = new IntersectionObserver((entries) => {
           link.classList.add('active');
         }
       });
+
+      // Show "Order Service" button only when in services section
+      if (id === 'services') {
+        orderServiceBtn.style.display = 'inline-flex';
+      } else {
+        orderServiceBtn.style.display = 'none';
+      }
     }
   });
 }, { threshold: 0.4, rootMargin: '-80px 0px 0px 0px' });
@@ -608,12 +655,41 @@ const defaultTools = [
 
 const defaultProjects = [];
 
+// Services Data
+const defaultServices = [
+  { 
+    name: 'Landing Pages',
+    desc: 'Landing Pages Desc',
+    message: 'أرغب في طلب خدمة تصميم صفحة هبوط.',
+    message_en: 'I want to order a Landing Page service.'
+  },
+  { 
+    name: 'Websites',
+    desc: 'Websites Desc',
+    message: 'أرغب في طلب خدمة تطوير موقع ويب.',
+    message_en: 'I want to order a Website development service.'
+  },
+  { 
+    name: 'Python Scripts',
+    desc: 'Python Scripts Desc',
+    message: 'أرغب في طلب خدمة سكربت بايثون.',
+    message_en: 'I want to order a Python script service.'
+  },
+  { 
+    name: 'Support & Maintenance',
+    desc: 'Support & Maintenance Desc',
+    message: 'أرغب في طلب خدمة الدعم والصيانة.',
+    message_en: 'I want to order a Support & Maintenance service.'
+  }
+];
+
 let skills = JSON.parse(localStorage.getItem('skills')) || defaultSkills;
 let tools = JSON.parse(localStorage.getItem('tools')) || defaultTools;
 let projects = JSON.parse(localStorage.getItem('projects')) || [];
+let services = JSON.parse(localStorage.getItem('services')) || defaultServices;
 
 function saveData() {
-  ['skills', 'tools', 'projects'].forEach(key => {
+  ['skills', 'tools', 'projects', 'services'].forEach(key => {
     localStorage.setItem(key, JSON.stringify(eval(key)));
   });
   renderAll();
@@ -624,7 +700,10 @@ function saveData() {
 // 12. Render Functions
 // =======================
 function renderAll() {
-  renderSkills(); renderTools(); renderProjects();
+  renderSkills(); 
+  renderTools(); 
+  renderProjects();
+  renderServices();
 }
 
 function renderSkills() {
@@ -676,6 +755,27 @@ function renderProjects() {
       </div>
     `;
     projectsGrid.appendChild(card);
+  });
+}
+
+function renderServices() {
+  servicesGrid.innerHTML = '';
+  services.forEach(service => {
+    const card = document.createElement('div');
+    card.className = 'service-card selectable';
+    const descKey = service.desc;
+    const desc = translations[currentLang][descKey];
+    const name = translations[currentLang][service.name];
+    card.innerHTML = `
+      <h3>${name}</h3>
+      <p>${desc}</p>
+    `;
+    card.addEventListener('click', () => {
+      if (card.classList.contains('selectable')) {
+        card.classList.toggle('selected');
+      }
+    });
+    servicesGrid.appendChild(card);
   });
 }
 
@@ -984,3 +1084,58 @@ if (header) {
     lastScrollTop = currentScroll;
   });
 }
+
+// =======================
+// 21. Services Section Logic
+// =======================
+orderServiceBtn.addEventListener('click', () => {
+  // Enable selection mode
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.classList.add('selectable');
+    card.classList.remove('selected');
+  });
+  servicesActions.style.display = 'block';
+  orderServiceBtn.style.display = 'none';
+});
+
+cancelSelection.addEventListener('click', () => {
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.classList.remove('selected');
+  });
+  servicesActions.style.display = 'none';
+  orderServiceBtn.style.display = 'inline-flex';
+});
+
+confirmOrder.addEventListener('click', () => {
+  const selected = document.querySelectorAll('.service-card.selected');
+  if (selected.length === 0) {
+    showToast(translations[currentLang]['Please select at least one service'], 'error');
+    return;
+  }
+
+  const serviceNames = Array.from(selected).map(card => {
+    const h3 = card.querySelector('h3').textContent;
+    return services.find(s => translations[currentLang][s.name] === h3);
+  });
+
+  let message = '';
+  if (serviceNames.length === 1) {
+    message = currentLang === 'ar' ? serviceNames[0].message : serviceNames[0].message_en;
+  } else {
+    const messages = serviceNames.map(s => currentLang === 'ar' ? s.message : s.message_en);
+    message = messages.join('\n\n');
+  }
+
+  // Scroll to contact section
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+
+  // Fill message
+  messageInput.value = message;
+
+  // Show toast
+  showToast('Service request ready! Please fill your name and email.', 'success');
+
+  // Exit selection mode
+  servicesActions.style.display = 'none';
+  orderServiceBtn.style.display = 'inline-flex';
+});
