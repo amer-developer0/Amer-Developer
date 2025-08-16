@@ -1,32 +1,10 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL Working Script
- * Version: 15.9 | Fixed Email Sending & UI Feedback
+ * Version: 16.0 | Replaced EmailJS with Formspree
  * Author: Amer Developer
  * ========================================
  */
-// =======================
-// 1. Load EmailJS Dynamically (Without init)
-// =======================
-function loadEmailJS(callback) {
-  if (window.emailjs) {
-    console.log('EmailJS library already loaded');
-    callback();
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-  script.onload = () => {
-    console.log('EmailJS library loaded successfully');
-    callback();
-  };
-  script.onerror = () => {
-    console.error('Failed to load EmailJS library. Check your internet connection or ad blockers.');
-    showToast('Failed to load email service. Please try again later.', 'error');
-  };
-  document.head.appendChild(script);
-}
 
 // =======================
 // 2. DOM Elements
@@ -299,9 +277,9 @@ function setLanguage(lang) {
   renderTools();
 
   typingText.textContent = '';
-  charIndex = 0;
-  isDeleting = false;
-  roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let roleIndex = 0;
   typeRole();
 
   showToast(`Language changed to ${lang.toUpperCase()}`);
@@ -774,73 +752,83 @@ function confirmAndDelete(type, index) {
 }
 
 // =======================
-// 15. Contact Form - Enhanced Email Sending (FIXED)
+// 15. Contact Form - Formspree Integration
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
-  loadEmailJS(() => {
-    const contactForm = document.getElementById('contact-form');
-    const sendEmailBtn = document.getElementById('send-email');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const messageInput = document.getElementById('message');
+  const contactForm = document.getElementById('contact-form');
+  const sendEmailBtn = document.getElementById('send-email');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
 
-    if (!contactForm || !sendEmailBtn || !nameInput || !emailInput || !messageInput) {
-      console.error('❌ أحد عناصر النموذج غير موجود في الصفحة. تأكد من الـ id في الـ HTML.');
+  if (!contactForm || !sendEmailBtn || !nameInput || !emailInput || !messageInput) {
+    console.error('❌ أحد عناصر النموذج غير موجود في الصفحة.');
+    return;
+  }
+
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
+  sendEmailBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    const originalText = sendEmailBtn.innerHTML;
+
+    if (!name || !email || !message) {
+      showToast(translations[currentLang]['Error'], 'error');
       return;
     }
 
-    function isValidEmail(email) {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailPattern.test(email);
+    if (!isValidEmail(email)) {
+      showToast(translations[currentLang]['Error Invalid Email'], 'error');
+      return;
     }
 
-    sendEmailBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
+    // تغيير نص الزر إلى "جارٍ الإرسال"
+    sendEmailBtn.disabled = true;
+    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
+    const sendingSpan = sendEmailBtn.querySelector('span');
+    sendingSpan.textContent = translations[currentLang]['Sending...'];
 
-      const name = nameInput.value.trim();
-      const email = emailInput.value.trim();
-      const message = messageInput.value.trim();
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('message', message);
+      formData.append('_subject', `رسالة جديدة من ${name}`);
 
-      const originalText = sendEmailBtn.innerHTML;
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-      sendEmailBtn.disabled = true;
-      sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
-      const sendingSpan = sendEmailBtn.querySelector('span');
-      sendingSpan.textContent = translations[currentLang]['Sending...'];
-
-      if (!name || !email || !message) {
-        showToast(translations[currentLang]['Error'], 'error');
-        sendEmailBtn.disabled = false;
-        sendEmailBtn.innerHTML = originalText;
-        return;
-      }
-
-      if (!isValidEmail(email)) {
-        showToast(translations[currentLang]['Error Invalid Email'], 'error');
-        sendEmailBtn.disabled = false;
-        sendEmailBtn.innerHTML = originalText;
-        return;
-      }
-
-      try {
-        await emailjs.sendForm('my_gmail_service', 'template_igz3lpi', contactForm, {
-          publicKey: 'y0arGSpBI2RpLMhnt'
-        });
-
+      if (response.ok) {
         showToast(translations[currentLang]['Success Email'], 'success');
         contactForm.reset();
-      } catch (err) {
-        console.error('EmailJS Error:', err);
-        showToast(translations[currentLang]['Error Network'], 'error');
-      } finally {
-        sendEmailBtn.disabled = false;
-        sendEmailBtn.innerHTML = originalText;
-        const finalSpan = sendEmailBtn.querySelector('span');
-        if (finalSpan) {
-          finalSpan.textContent = translations[currentLang]['Send via Email'];
-        }
+      } else {
+        throw new Error('فشل الإرسال');
       }
-    });
+    } catch (err) {
+      console.error('Formspree Error:', err);
+      showToast(translations[currentLang]['Error Network'], 'error');
+    } finally {
+      // إعادة الزر لحالته الطبيعية
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.innerHTML = originalText;
+      const finalSpan = sendEmailBtn.querySelector('span');
+      if (finalSpan) {
+        finalSpan.textContent = translations[currentLang]['Send via Email'];
+      }
+    }
   });
 });
 
