@@ -1,0 +1,101 @@
+{
+  "skills": [
+    {
+      "short": "HTML",
+      "full": "HyperText Markup Language",
+      "desc_en": "Structure of web pages and content organization.",
+      "desc_ar": "هيكل صفحات الويب وصياغة المحتوى بطريقة منظمة."
+    },
+    {
+      "short": "CSS",
+      "full": "Cascading Style Sheets",
+      "desc_en": "Styling and adding aesthetic touches to design consistency.",
+      "desc_ar": "تنسيق الصفحات وإضافة لمسات جمالية وتناسق في التصميم."
+    },
+    {
+      "short": "JavaScript",
+      "full": "JavaScript",
+      "desc_en": "Adding interactivity and motion to make the site dynamic.",
+      "desc_ar": "إضافة التفاعلية والحركة لجعل الموقع ديناميكي."
+    },
+    {
+      "short": "Python",
+      "full": "Python",
+      "desc_en": "Programming applications and building smart tools and practical solutions.",
+      "desc_ar": "برمجة التطبيقات وبناء أدوات ذكية وحلول عملية."
+    },
+    {
+      "short": "Tailwind CSS",
+      "full": "Tailwind CSS",
+      "desc_en": "Designing professional interfaces quickly and flexibly with clean code.",
+      "desc_ar": "تصميم واجهات احترافية بسرعة ومرونة باستخدام كود نظيف."
+    },
+    {
+      "short": "AI Tools",
+      "full": "Artificial Intelligence Tools",
+      "desc_en": "Leveraging AI technologies to enhance performance and creativity.",
+      "desc_ar": "استغلال تقنيات الذكاء الاصطناعي لتحسين الأداء والإبداع."
+    }
+  ],
+  "tools": [
+    {
+      "short": "Git",
+      "full": "Git",
+      "desc_en": "Managing and tracking changes in programming projects.",
+      "desc_ar": "إدارة وتتبع التغييرات في المشاريع البرمجية."
+    },
+    {
+      "short": "GitHub",
+      "full": "GitHub",
+      "desc_en": "Saving and sharing code with easy collaboration.",
+      "desc_ar": "حفظ ومشاركة الأكواد والعمل الجماعي بسهولة."
+    },
+    {
+      "short": "VS Code",
+      "full": "Visual Studio Code",
+      "desc_en": "Powerful and flexible code editor supporting all technologies.",
+      "desc_ar": "محرر أكواد قوي ومرن يدعم جميع التقنيات."
+    },
+    {
+      "short": "Figma",
+      "full": "Figma",
+      "desc_en": "Designing user interfaces and experiences professionally.",
+      "desc_ar": "تصميم واجهات وتجربة مستخدم بشكل احترافي."
+    },
+    {
+      "short": "AI Tools",
+      "full": "Artificial Intelligence Tools",
+      "desc_en": "Using AI tools to improve work and save time.",
+      "desc_ar": "استخدام أدوات الذكاء الاصطناعي في تحسين العمل وتوفير الوقت."
+    }
+  ],
+  "projects": [],
+  "services": [
+    {
+      "name": "Landing Pages",
+      "desc": "Landing Pages Desc",
+      "message": "أرغب في طلب خدمة تصميم صفحة هبوط.",
+      "message_en": "I want to order a Landing Page service."
+    },
+    {
+      "name": "Websites",
+      "desc": "Websites Desc",
+      "message": "أرغب في طلب خدمة تطوير موقع ويب.",
+      "message_en": "I want to order a Website development service."
+    },
+    {
+      "name": "Python Scripts",
+      "desc": "Python Scripts Desc",
+      "message": "أرغب في طلب خدمة سكربت بايثون.",
+      "message_en": "I want to order a Python script service."
+    },
+    {
+      "name": "Support & Maintenance",
+      "desc": "Support & Maintenance Desc",
+      "message": "أرغب في طلب خدمة الدعم والصيانة.",
+      "message_en": "I want to order a Support & Maintenance service."
+    }
+  ],
+  "logo": "assets/images/logo.png",
+  "about_text": ""
+}
