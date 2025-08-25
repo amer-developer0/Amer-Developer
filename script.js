@@ -980,66 +980,107 @@ function confirmAndDelete(type, index) {
 // =======================
 // 15. Contact Form - Formspree Integration
 // =======================
-document.addEventListener('DOMContentLoaded', async () => {
-  // Show loading screen
-  if (loadingScreen) {
-    setTimeout(() => {
-      loadingScreen.style.opacity = '0';
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-      }, 500);
-    }, 1000);
-  }
-  
-  // Load data from data.json
-  await loadData();
-  
-  // Set language
+document.addEventListener('DOMContentLoaded', () => {
+  // ✅ تأكد من تعيين اللغة أولًا
   setLanguage(currentLang);
   
-  // Initialize typing animation
-  typeRole();
+  // ✅ أعد تعريف عناصر النموذج هنا داخل DOMContentLoaded
+  const contactForm = document.getElementById('contact-form');
+  const sendEmailBtn = document.getElementById('send-email');
+  const sendWhatsAppBtn = document.getElementById('send-whatsapp');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
   
-  // Setup navigation scroll
-  updateActiveLink();
+  if (!contactForm || !sendEmailBtn || !sendWhatsAppBtn || !nameInput || !emailInput || !messageInput) {
+    console.error('❌ أحد عناصر النموذج غير موجود في الصفحة.');
+    return;
+  }
   
-  // Setup horizontal scroll for mobile nav
-  setupNavScroll();
-});
-
-function setupNavScroll() {
-  const navList = document.querySelector('.nav-list');
-  if (!navList) return;
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
   
-  let isDragging = false;
-  let startX, scrollLeft;
-  
-  navList.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.pageX - navList.offsetLeft;
-    scrollLeft = navList.scrollLeft;
-  });
-  
-  navList.addEventListener('mouseleave', () => {
-    isDragging = false;
-  });
-  
-  navList.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-  
-  navList.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
+  // Send via Email
+  sendEmailBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    const x = e.pageX - navList.offsetLeft;
-    const walk = (x - startX) * 2;
-    navList.scrollLeft = scrollLeft - walk;
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+    const originalText = sendEmailBtn.innerHTML;
+    
+    if (!name || !email || !message) {
+      showToast(translations[currentLang]['Error'], 'error');
+      return;
+    }
+    
+    if (!isValidEmail(email)) {
+      showToast(translations[currentLang]['Error Invalid Email'], 'error');
+      return;
+    }
+    
+    sendEmailBtn.disabled = true;
+    sendEmailBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-translate="Sending...">Sending...</span>`;
+    const sendingSpan = sendEmailBtn.querySelector('span');
+    sendingSpan.textContent = translations[currentLang]['Sending...'];
+    
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('message', message);
+      formData.append('_subject', `رسالة جديدة من ${name}`);
+      
+      const response = await fetch('https://formspree.io/f/xdkdjqzo', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        showToast(translations[currentLang]['Success Email'], 'success');
+        contactForm.reset();
+      } else {
+        throw new Error('فشل الإرسال');
+      }
+    } catch (err) {
+      console.error('Formspree Error:', err);
+      showToast(translations[currentLang]['Error Network'], 'error');
+    } finally {
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.innerHTML = originalText;
+      const finalSpan = sendEmailBtn.querySelector('span');
+      if (finalSpan) {
+        finalSpan.textContent = translations[currentLang]['Send via Email'];
+      }
+    }
   });
   
-  // Prevent selection
-  navList.addEventListener('selectstart', (e) => e.preventDefault());
-}
-
+  // Send via WhatsApp
+  sendWhatsAppBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+    
+    if (!name || !message) {
+      showToast(translations[currentLang]['Error'], 'error');
+      return;
+    }
+    
+    let whatsappMessage = `Hello Amer Abdo,\n\n`;
+    whatsappMessage += `My name is ${name}:\n`;
+    whatsappMessage += `Email: ${email}\n`;
+    whatsappMessage += `Message: ${message}\n`;
+    whatsappMessage += `Sent from your portfolio website.`;
+    
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/201280787721?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  });
+});
 // =======================
 // 16. Admin Forms
 // =======================
