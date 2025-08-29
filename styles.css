@@ -37,7 +37,7 @@
   --shadow-lg: 0 20px 40px rgba(0, 255, 255, 0.25);
   --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-all: all var(--transition-fast);
-  --header-height: 70px;
+  --header-height: 70px; /* تم حذف التعريف المكرر */
   --container-width: 1200px;
 }
 
@@ -358,7 +358,7 @@ strong {
   justify-content: space-between;
   padding: 0 var(--space-lg);
   border-bottom: 1px solid var(--border-light);
-  transition: var(--transition-all);
+  transition: var(--transition-all), transform 0.3s ease-in-out; /* تم دمج التحويلات */
 }
 
 .logo img {
@@ -412,16 +412,14 @@ strong {
   border-radius: 1px;
 }
 
-.nav-link:hover::after {
+/* ✅ تم دمج hover و active */
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
 .nav-link.active {
   color: var(--accent-teal);
-}
-
-.nav-link.active::after {
-  width: 100%;
 }
 
 /* Order Service Button */
@@ -593,10 +591,13 @@ strong {
   box-shadow: var(--shadow-md);
 }
 
+/* ✅ تم إصلاح مشكلة حجم الصورة */
 .project-img {
   width: 100%;
-  height: 180px;
+  min-height: 180px;
+  height: auto;
   object-fit: cover;
+  object-position: center;
   transition: var(--transition-all);
 }
 
@@ -1303,14 +1304,5 @@ section[id] {
   }
 }
 
-.main-header {
-  position: fixed;
-  top: 0;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* ✅ الكلاس الجديد: يخفي الهيدر لما تمرّر للأسفل */
-.header-hidden {
-  transform: translateY(-100%);
-}
-
+/* ✅ تم دمج هذه القاعدة مع التعريف الكامل أعلاه */
+/* لا حاجة لتعريف منفصل */
