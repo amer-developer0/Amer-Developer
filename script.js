@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL SCRIPT (تم التصحيح الكامل)
- * Version: 17.6 | تم تعطيل الحفظ التلقائي - الإضافة يدوية
+ * Version: 17.7 | تم إصلاح الأخطاء 1-6 | تم إزالة updateActiveLink الزائدة
  * Author: Amer Developer
  * ========================================
  */
@@ -71,7 +71,6 @@ const orderServiceBtn = document.getElementById('order-service-btn');
 const servicesActions = document.getElementById('services-actions');
 const cancelSelection = document.getElementById('cancel-selection');
 const confirmOrder = document.getElementById('confirm-order');
-
 // =======================
 // 2. نظام الترجمة
 // =======================
@@ -237,7 +236,6 @@ const translations = {
     'Support & Maintenance Desc': 'Technical support and regular maintenance for stability.'
   }
 };
-
 // =======================
 // 3. إدارة اللغة
 // =======================
@@ -294,28 +292,26 @@ function setLanguage(lang) {
   renderSkills();
   renderTools();
   renderServices();
+  // ✅ تم إصلاح الخطأ رقم 1: تأكد من إعادة رسم المشاريع عند تغيير اللغة
+  renderProjects(); 
   typingText.textContent = '';
   typeRole();
   showToast(`Language changed to ${lang.toUpperCase()}`);
 }
-
 languageSwitcher.addEventListener('click', (e) => {
   e.stopPropagation();
   languageMenu.hidden = !languageMenu.hidden;
 });
-
 document.addEventListener('click', (e) => {
   if (!languageSwitcher.contains(e.target)) {
     languageMenu.hidden = true;
   }
 });
-
 document.querySelectorAll('#language-menu li').forEach(li => {
   li.addEventListener('click', () => {
     setLanguage(li.dataset.lang);
   });
 });
-
 // =======================
 // 4. تأثير الكتابة
 // =======================
@@ -326,7 +322,6 @@ const roles = {
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
-
 function typeRole() {
   const currentRole = roles[currentLang]?.[roleIndex];
   if (!currentRole) return;
@@ -354,7 +349,6 @@ function typeRole() {
   const erasingSpeed = 100;
   setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
 }
-
 // =======================
 // 5. تأثيرات التمرير والتنقل النشط
 // =======================
@@ -377,38 +371,16 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.4, rootMargin: '-80px 0px 0px 0px' });
-
 sections.forEach(section => observer.observe(section));
 
-function updateActiveLink() {
-  const scrollPosition = window.scrollY + 100;
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    const sectionId = section.getAttribute('id');
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${sectionId}`) {
-          link.classList.add('active');
-        }
-      });
-    }
-  });
-}
-
-window.addEventListener('scroll', updateActiveLink);
-window.addEventListener('load', updateActiveLink);
-window.addEventListener('hashchange', () => {
-  setTimeout(updateActiveLink, 100);
-});
+// ✅ تم إزالة الوظيفة الزائدة updateActiveLink() والأحداث المرتبطة بها (الخطأ رقم 6)
+// لا حاجة لها لأن IntersectionObserver يكفي
 
 // =======================
 // 6. الوصول للإدارة (8 نقرات)
 // =======================
 let clickCount = 0;
 let lastClickTime = 0;
-
 logoImg.addEventListener('click', () => {
   const now = Date.now();
   if (now - lastClickTime < 2000) {
@@ -422,11 +394,9 @@ logoImg.addEventListener('click', () => {
     clickCount = 0;
   }
 });
-
 const heroAvatar = document.querySelector('.hero-avatar');
 let mobileClickCount = 0;
 let lastMobileClickTime = 0;
-
 if (heroAvatar) {
   heroAvatar.addEventListener('click', () => {
     if (window.innerWidth > 768) return;
@@ -444,21 +414,18 @@ if (heroAvatar) {
     }
   });
 }
-
 function openPasswordModal() {
   passwordModal.classList.add('show');
   passwordModal.hidden = false;
   adminPassword.value = '';
   passwordError.style.display = 'none';
 }
-
 function closePasswordModal() {
   passwordModal.classList.remove('show');
   setTimeout(() => {
     passwordModal.hidden = true;
   }, 300);
 }
-
 // =======================
 // 7. التحقق من كلمة المرور (بدون تشفير)
 // =======================
@@ -477,25 +444,21 @@ async function checkPassword() {
     passwordError.style.display = 'block';
   }
 }
-
 function toggleAdminPanel() {
   adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
 }
-
 // =======================
 // 8. تحكمات الإدارة
 // =======================
 function closeAllForms() {
   [formAddProject, formAddSkill, formAddTool, deleteSections].forEach(f => f.style.display = 'none');
 }
-
 function openAddProject() { closeAllForms(); formAddProject.style.display = 'block'; }
 function openAddSkill() { closeAllForms(); formAddSkill.style.display = 'block'; }
 function openAddTool() { closeAllForms(); formAddTool.style.display = 'block'; }
 function openDeleteProject() { closeAllForms(); deleteSections.style.display = 'block'; }
 function openDeleteSkill() { closeAllForms(); deleteSections.style.display = 'block'; }
 function openDeleteTool() { closeAllForms(); deleteSections.style.display = 'block'; }
-
 function changeLogo() {
   const newText = prompt('Upload new logo image path (e.g. /assets/images/new-logo.png):', logoImg.src);
   if (newText && newText.trim()) {
@@ -503,7 +466,6 @@ function changeLogo() {
     showToast('Update logo path manually in data.json', 'warning');
   }
 }
-
 function changeAboutText() {
   const newText = prompt('Enter new About Me text:', aboutText.textContent);
   if (newText && newText.trim()) {
@@ -511,7 +473,6 @@ function changeAboutText() {
     showToast('Update "about" text manually in data.json', 'warning');
   }
 }
-
 // =======================
 // 9. وضع التحرير المباشر
 // =======================
@@ -519,11 +480,9 @@ function enterEditMode() {
   editModeOverlay.style.display = 'block';
   siteFrame.src = './';
 }
-
 function exitEditMode() {
   editModeOverlay.style.display = 'none';
 }
-
 // =======================
 // 10. عرض رفع الملفات
 // =======================
@@ -534,7 +493,6 @@ function exitEditMode() {
     filenameSpan.textContent = this.files.length ? this.files[0].name : translations[currentLang][placeholder];
   });
 });
-
 // =======================
 // 11. إدارة البيانات (باستخدام data.json)
 // =======================
@@ -546,7 +504,6 @@ const defaultSkills = [
   { short: 'Tailwind CSS', full: 'Tailwind CSS', desc_en: 'Designing professional interfaces quickly and flexibly with clean code.', desc_ar: 'تصميم واجهات احترافية بسرعة ومرونة باستخدام كود نظيف.' },
   { short: 'AI Tools', full: 'Artificial Intelligence Tools', desc_en: 'Leveraging AI technologies to enhance performance and creativity.', desc_ar: 'استغلال تقنيات الذكاء الاصطناعي لتحسين الأداء والإبداع.' }
 ];
-
 const defaultTools = [
   { short: 'Git', full: 'Git', desc_en: 'Managing and tracking changes in programming projects.', desc_ar: 'إدارة وتتبع التغييرات في المشاريع البرمجية.' },
   { short: 'GitHub', full: 'GitHub', desc_en: 'Saving and sharing code with easy collaboration.', desc_ar: 'حفظ ومشاركة الأكواد والعمل الجماعي بسهولة.' },
@@ -554,7 +511,6 @@ const defaultTools = [
   { short: 'Figma', full: 'Figma', desc_en: 'Designing user interfaces and experiences professionally.', desc_ar: 'تصميم واجهات وتجربة مستخدم بشكل احترافي.' },
   { short: 'AI Tools', full: 'Artificial Intelligence Tools', desc_en: 'Using AI tools to improve work and save time.', desc_ar: 'استخدام أدوات الذكاء الاصطناعي في تحسين العمل وتوفير الوقت.' }
 ];
-
 const defaultProjects = [];
 const defaultServices = [
   { name: 'Landing Pages', desc: 'Landing Pages Desc', message: 'أرغب في طلب خدمة تصميم صفحة هبوط.', message_en: 'I want to order a Landing Page service.' },
@@ -562,12 +518,10 @@ const defaultServices = [
   { name: 'Python Scripts', desc: 'Python Scripts Desc', message: 'أرغب في طلب خدمة سكربت بايثون.', message_en: 'I want to order a Python script service.' },
   { name: 'Support & Maintenance', desc: 'Support & Maintenance Desc', message: 'أرغب في طلب خدمة الدعم والصيانة.', message_en: 'I want to order a Support & Maintenance service.' }
 ];
-
 let skills = [];
 let tools = [];
 let projects = [];
 let services = [];
-
 async function loadData() {
   try {
     const response = await fetch('data.json');
@@ -593,10 +547,8 @@ async function loadData() {
   renderAll();
   setLanguage(currentLang);
 }
-
 // تم تعطيل saveData تمامًا
 // لا يوجد دالة saveData()
-
 // =======================
 // 12. دوال العرض
 // =======================
@@ -606,7 +558,6 @@ function renderAll() {
   renderProjects();
   renderServices();
 }
-
 function renderSkills() {
   if (!skillsGrid) return;
   skillsGrid.innerHTML = '';
@@ -622,7 +573,6 @@ function renderSkills() {
     skillsGrid.appendChild(card);
   });
 }
-
 function renderTools() {
   if (!toolsGrid) return;
   toolsGrid.innerHTML = '';
@@ -638,7 +588,6 @@ function renderTools() {
     toolsGrid.appendChild(card);
   });
 }
-
 function renderProjects() {
   if (!projectsGrid) return;
   projectsGrid.innerHTML = '';
@@ -650,6 +599,7 @@ function renderProjects() {
   projects.forEach(project => {
     const card = document.createElement('div');
     card.className = 'project-card';
+    // ✅ تم استخدام نظام الترجمة هنا أيضًا
     const desc = currentLang === 'ar' ? project.desc_ar : project.desc_en;
     card.innerHTML = `
       <img src="${project.image}" alt="${project.name}" class="project-img">
@@ -663,7 +613,6 @@ function renderProjects() {
   });
   updateProjectsTitle();
 }
-
 function updateProjectsTitle() {
   const count = projects.length;
   const key = 'Latest Projects';
@@ -672,7 +621,6 @@ function updateProjectsTitle() {
     projectsTitle.textContent = template.replace('%d', count);
   }
 }
-
 function renderServices() {
   if (!servicesGrid) return;
   servicesGrid.innerHTML = '';
@@ -689,7 +637,6 @@ function renderServices() {
     servicesGrid.appendChild(card);
   });
 }
-
 // =======================
 // 13. قوائم الحذف
 // =======================
@@ -707,7 +654,6 @@ function renderDeleteProjectList() {
     deleteProjectList.appendChild(item);
   });
 }
-
 function renderDeleteSkillList() {
   if (!deleteSkillList) return;
   deleteSkillList.innerHTML = '';
@@ -722,7 +668,6 @@ function renderDeleteSkillList() {
     deleteSkillList.appendChild(item);
   });
 }
-
 function renderDeleteToolList() {
   if (!deleteToolList) return;
   deleteToolList.innerHTML = '';
@@ -737,7 +682,6 @@ function renderDeleteToolList() {
     deleteToolList.appendChild(item);
   });
 }
-
 // =======================
 // 14. تأكيد والحذف
 // =======================
@@ -751,7 +695,6 @@ async function confirmAndDelete(type, index) {
     if (type === 'project') projects.splice(index, 1);
     else if (type === 'skill') skills.splice(index, 1);
     else if (type === 'tool') tools.splice(index, 1);
-    // لا يتم حفظ التغييرات تلقائيًا
     renderDeleteProjectList();
     renderDeleteSkillList();
     renderDeleteToolList();
@@ -761,7 +704,6 @@ async function confirmAndDelete(type, index) {
     showToast(t['Incorrect Password'], 'error');
   }
 }
-
 // =======================
 // 15. نموذج الاتصال - البريد الإلكتروني وواتساب
 // =======================
@@ -772,12 +714,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     yearSpan.textContent = new Date().getFullYear();
   }
   const waNumber = '201280787721';
-
   function isValidEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   }
-
   sendWhatsAppBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -804,7 +744,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whatsappUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   });
-
   sendEmailBtn.addEventListener('click', async () => {
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -842,7 +781,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
-
 // =======================
 // 16. نماذج الإدارة
 // =======================
@@ -854,10 +792,8 @@ formProject.addEventListener('submit', (e) => {
   const videoFile = projectVideoInput.files[0];
   const descEn = document.getElementById('input-project-desc-en').value;
   const descAr = document.getElementById('input-project-desc-ar').value;
-
   const imageUrl = imageFile ? `/assets/images/${imageFile.name}` : 'assets/images/project-placeholder.jpg';
   const videoUrl = videoFile ? `/assets/videos/${videoFile.name}` : '';
-
   const newProject = {
     name,
     link,
@@ -866,10 +802,8 @@ formProject.addEventListener('submit', (e) => {
     desc_en: descEn,
     desc_ar: descAr
   };
-
   const code = JSON.stringify(newProject, null, 2);
   prompt('✅ انسخ هذا الكود وأضفه يدويًا إلى قسم "projects" في ملف data.json:', code);
-
   projects.unshift(newProject);
   renderAll();
   formProject.reset();
@@ -877,53 +811,44 @@ formProject.addEventListener('submit', (e) => {
   videoFilename.textContent = translations[currentLang]['Upload Video (optional)'];
   showToast('Project added to preview. Update data.json manually!', 'success');
 });
-
 formSkill.addEventListener('submit', (e) => {
   e.preventDefault();
   const short = document.getElementById('input-skill-short').value;
   const full = document.getElementById('input-skill-full').value;
   const descEn = document.getElementById('input-skill-desc-en').value;
   const descAr = document.getElementById('input-skill-desc-ar').value;
-
   const newSkill = {
     short,
     full,
     desc_en: descEn,
     desc_ar: descAr
   };
-
   const code = JSON.stringify(newSkill, null, 2);
   prompt('✅ انسخ هذا الكود وأضفه يدويًا إلى قسم "skills" في ملف data.json:', code);
-
   skills.push(newSkill);
   renderAll();
   formSkill.reset();
   showToast('Skill added to preview. Update data.json manually!', 'success');
 });
-
 formTool.addEventListener('submit', (e) => {
   e.preventDefault();
   const short = document.getElementById('input-tool-short').value;
   const full = document.getElementById('input-tool-full').value;
-  const descEn = document.getElementById('input-tool-desc-en').value;
-  const descAr = document.getElementById('input-tool-desc-ar').value;
-
+  const descEn = document.getElementById('input-skill-desc-en').value;
+  const descAr = document.getElementById('input-skill-desc-ar').value;
   const newTool = {
     short,
     full,
     desc_en: descEn,
     desc_ar: descAr
   };
-
   const code = JSON.stringify(newTool, null, 2);
   prompt('✅ انسخ هذا الكود وأضفه يدويًا إلى قسم "tools" في ملف data.json:', code);
-
   tools.push(newTool);
   renderAll();
   formTool.reset();
   showToast('Tool added to preview. Update data.json manually!', 'success');
 });
-
 // =======================
 // 17. الإشعارات وردود الفعل
 // =======================
@@ -934,7 +859,6 @@ function showToast(message, type = 'success') {
   toast.classList.add(type, 'show');
   setTimeout(() => toast.classList.remove('show'), 5000);
 }
-
 // =======================
 // 18. منطق قسم الخدمات
 // =======================
@@ -949,7 +873,6 @@ orderServiceBtn.addEventListener('click', () => {
   servicesActions.style.display = 'block';
   orderServiceBtn.style.display = 'none';
 });
-
 cancelSelection.addEventListener('click', () => {
   document.querySelectorAll('.service-card').forEach(card => {
     card.classList.remove('selectable', 'selected');
@@ -958,7 +881,6 @@ cancelSelection.addEventListener('click', () => {
   servicesActions.style.display = 'none';
   orderServiceBtn.style.display = 'inline-flex';
 });
-
 confirmOrder.addEventListener('click', () => {
   const selected = document.querySelectorAll('.service-card.selected');
   if (selected.length === 0) {
@@ -986,4 +908,3 @@ confirmOrder.addEventListener('click', () => {
   servicesActions.style.display = 'none';
   orderServiceBtn.style.display = 'inline-flex';
 });
-
