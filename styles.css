@@ -594,7 +594,7 @@ strong {
 /* ✅ تم إصلاح مشكلة حجم الصورة */
 .project-img {
   width: 100%;
-  min-height: 180px;
+  min-height: 140px; /* تم تقليل القيمة من 180 إلى 140 */
   height: auto;
   object-fit: cover;
   object-position: center;
