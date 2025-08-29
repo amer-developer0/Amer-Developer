@@ -20,7 +20,6 @@
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <!-- Preload Key Assets -->
   <link rel="preload" as="image" href="assets/images/logo.png" />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" />
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <!-- Font Awesome CDN -->
@@ -97,7 +96,7 @@
     </nav>
     <!-- Order Service Button -->
     <button id="order-service-btn" class="btn btn-order" style="display: none;">
-      <i class="fas fa-shopping-cart"></i> <span data-translate="Order Service">Order Service</span>
+      <i class="fas fa-shopping-cart" aria-hidden="true"></i> <span data-translate="Order Service">Order Service</span>
     </button>
   </header>
 
@@ -118,7 +117,7 @@
             I build digital solutions that help you appear professionally and effectively in the digital market.
           </p>
           <a href="#about" class="btn btn-primary" data-animation="slide-up" style="animation-delay: 0.6s;" data-translate="More About Me">
-            More About Me <i class="fas fa-arrow-right"></i>
+            More About Me <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </a>
           <!-- Social Icons Below Button -->
           <div class="social-icons-home" data-animation="fade-in" style="animation-delay: 0.8s;">
@@ -168,10 +167,10 @@
         <!-- Action Buttons (Moved Above Grid) -->
         <div id="services-actions" style="display: none; text-align: center; margin-bottom: var(--space-lg);">
           <button id="cancel-selection" class="btn btn-secondary">
-            <i class="fas fa-times"></i> <span data-translate="Cancel Selection">Cancel Selection</span>
+            <i class="fas fa-times" aria-hidden="true"></i> <span data-translate="Cancel Selection">Cancel Selection</span>
           </button>
           <button id="confirm-order" class="btn btn-primary" style="margin-left: 1rem;">
-            <i class="fas fa-check"></i> <span data-translate="Confirm Order">Confirm Order</span>
+            <i class="fas fa-check" aria-hidden="true"></i> <span data-translate="Confirm Order">Confirm Order</span>
           </button>
         </div>
         <div class="services-grid" id="services-grid">
@@ -237,10 +236,10 @@
             <!-- Dual Send Buttons -->
             <div class="send-options">
               <button type="button" class="btn btn-email" id="send-email">
-                <i class="fas fa-envelope"></i> <span data-translate="Send via Email">Send via Email</span>
+                <i class="fas fa-envelope" aria-hidden="true"></i> <span data-translate="Send via Email">Send via Email</span>
               </button>
               <button type="button" class="btn btn-whatsapp" id="send-whatsapp">
-                <i class="fab fa-whatsapp"></i> <span data-translate="Send via WhatsApp">Send via WhatsApp</span>
+                <i class="fab fa-whatsapp" aria-hidden="true"></i> <span data-translate="Send via WhatsApp">Send via WhatsApp</span>
               </button>
             </div>
           </form>
@@ -324,17 +323,16 @@
       <button class="btn-close" onclick="toggleAdminPanel()">&times;</button>
     </div>
     <div class="admin-controls-grid">
-      <button class="admin-btn" onclick="openAddProject()"><i class="fas fa-plus"></i> <span data-translate="Add Project">Add Project</span></button>
-      <button class="admin-btn" onclick="openAddSkill()"><i class="fas fa-plus"></i> <span data-translate="Add Skill">Add Skill</span></button>
-      <button class="admin-btn" onclick="openAddTool()"><i class="fas fa-plus"></i> <span data-translate="Add Tool">Add Tool</span></button>
-      <button class="admin-btn" onclick="openDeleteProject()"><i class="fas fa-trash"></i> <span data-translate="Delete Project">Delete Project</span></button>
-      <button class="admin-btn" onclick="openDeleteSkill()"><i class="fas fa-trash"></i> <span data-translate="Delete Skill">Delete Skill</span></button>
-      <button class="admin-btn" onclick="openDeleteTool()"><i class="fas fa-trash"></i> <span data-translate="Delete Tool">Delete Tool</span></button>
-      <button class="admin-btn" onclick="changeLogo()"><i class="fas fa-image"></i> <span data-translate="Change Logo">Change Logo</span></button>
-      <button class="admin-btn" onclick="changeAboutText()"><i class="fas fa-edit"></i> <span data-translate="Change About Text">Change About Text</span></button>
-      <button class="admin-btn full" onclick="enterEditMode()"><i class="fas fa-cogs"></i> <span data-translate="Control Site Live">Control Site Live</span></button>
+      <button class="admin-btn" onclick="openAddProject()"><i class="fas fa-plus" aria-hidden="true"></i> <span data-translate="Add Project">Add Project</span></button>
+      <button class="admin-btn" onclick="openAddSkill()"><i class="fas fa-plus" aria-hidden="true"></i> <span data-translate="Add Skill">Add Skill</span></button>
+      <button class="admin-btn" onclick="openAddTool()"><i class="fas fa-plus" aria-hidden="true"></i> <span data-translate="Add Tool">Add Tool</span></button>
+      <button class="admin-btn" onclick="openDeleteProject()"><i class="fas fa-trash" aria-hidden="true"></i> <span data-translate="Delete Project">Delete Project</span></button>
+      <button class="admin-btn" onclick="openDeleteSkill()"><i class="fas fa-trash" aria-hidden="true"></i> <span data-translate="Delete Skill">Delete Skill</span></button>
+      <button class="admin-btn" onclick="openDeleteTool()"><i class="fas fa-trash" aria-hidden="true"></i> <span data-translate="Delete Tool">Delete Tool</span></button>
+      <button class="admin-btn" onclick="changeLogo()"><i class="fas fa-image" aria-hidden="true"></i> <span data-translate="Change Logo">Change Logo</span></button>
+      <button class="admin-btn" onclick="changeAboutText()"><i class="fas fa-edit" aria-hidden="true"></i> <span data-translate="Change About Text">Change About Text</span></button>
+      <button class="admin-btn full" onclick="enterEditMode()"><i class="fas fa-cogs" aria-hidden="true"></i> <span data-translate="Control Site Live">Control Site Live</span></button>
     </div>
-
     <!-- Edit Mode Overlay -->
     <div id="edit-mode-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; color: white; padding: 20px; overflow: auto;">
       <div style="text-align: center; margin-bottom: 20px;">
@@ -343,7 +341,6 @@
       </div>
       <iframe id="site-frame" src="./" style="width: 100%; height: calc(100vh - 100px); border: 2px solid #00FFFF; border-radius: 10px;" sandbox="allow-scripts"></iframe>
     </div>
-
     <!-- Forms will be shown via JS -->
     <div id="admin-forms">
       <!-- Add Project Form -->
@@ -367,7 +364,6 @@
           <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
         </form>
       </div>
-
       <!-- Add Skill Form -->
       <div id="form-add-skill" style="display: none;">
         <form id="form-skill">
@@ -379,7 +375,6 @@
           <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
         </form>
       </div>
-
       <!-- Add Tool Form -->
       <div id="form-add-tool" style="display: none;">
         <form id="form-tool">
@@ -391,7 +386,6 @@
           <button type="button" class="btn btn-secondary" onclick="closeAllForms()" data-translate="Cancel">Cancel</button>
         </form>
       </div>
-
       <!-- Delete Lists -->
       <div id="delete-sections" style="display: none;">
         <div class="delete-list" id="delete-project-list">
@@ -429,4 +423,3 @@
   <script src="script.js" defer></script>
 </body>
 </html>
-
