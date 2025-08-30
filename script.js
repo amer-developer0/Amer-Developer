@@ -1027,9 +1027,8 @@ confirmOrder.addEventListener('click', () => {
   if (serviceNames.length === 1) {
     message = currentLang === 'ar' ? serviceNames[0].message : serviceNames[0].message_en;
   } else {
-    const messages = serviceNames.map(s => currentLang === 'ar' ? s.message : s.message_en);
-    message = messages.join('
-');
+   const messages = serviceNames.map(s => currentLang === 'ar' ? s.message : s.message_en);
+   message = messages.join('\n');  // ✅ تم التصحيح: استخدم \n بدل سطر جديد حرفي
   }
   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
   messageInput.value = message;
