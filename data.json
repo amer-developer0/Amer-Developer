@@ -87,11 +87,11 @@
       "desc_ar": "صفحة هبوط عصرية وسريعة لتطبيق «وزّعها صح». صُممت لتوضيح فكرة التطبيق بوضوح مع دعم ثنائي اللغة ونموذج اشتراك محسّن. بُنيت باستخدام HTML وCSS وJavaScript مع تركيز على الأداء، الجمالية، وتجربة المستخدم، وبأسلوب متجاوب يناسب جميع الأجهزة."
     },
     {
-      "name": "عنوان تجريبي"
-      "link": "https://amer-developer0.github.io/Waz3ha--landing-page/"
-      "image": "assets/images/logo.png"
-      "video": "assets/videos/build_with_amer_vid"
-      "desc_en": "eeeeeeeee"
+      "name": "عنوان تجريبي",
+      "link": "https://amer-developer0.github.io/Waz3ha--landing-page/",
+      "image": "assets/images/logo.png",
+      "video": "assets/videos/build_with_amer_vid",
+      "desc_en": "eeeeeeeee",
       "desc_ar": "وصف تجريبي عربي"
     },
   ],
