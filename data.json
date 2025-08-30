@@ -85,6 +85,14 @@
       "video": "",
       "desc_en": "A modern, fast, and fully responsive landing page for the ‘Waz3ha Sah’ app. Designed to present the app’s concept clearly with bilingual support and an optimized subscription form. Built with HTML, CSS, and JavaScript, focusing on performance, aesthetics, and user experience.",
       "desc_ar": "صفحة هبوط عصرية وسريعة لتطبيق «وزّعها صح». صُممت لتوضيح فكرة التطبيق بوضوح مع دعم ثنائي اللغة ونموذج اشتراك محسّن. بُنيت باستخدام HTML وCSS وJavaScript مع تركيز على الأداء، الجمالية، وتجربة المستخدم، وبأسلوب متجاوب يناسب جميع الأجهزة."
+    },
+    {
+      "name": "PassForge",
+      "link": "https://amer-developer0.github.io/PassForge",
+      "image": "assets/images/passforg_landing_page.png",
+      "video": "",
+      "desc_en": "A professional landing page for a smart password generator, combining modern design, bilingual support, and advanced security vision.",
+      "desc_ar": "صفحة هبوط احترافية لتطبيق مولد كلمات مرور ذكي، يجمع بين التصميم العصري، الدعم ثنائي اللغة، ورؤية أمنية متقدمة."
     }
   ],
   "services": [
