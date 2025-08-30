@@ -71,6 +71,12 @@ const orderServiceBtn = document.getElementById('order-service-btn');
 const servicesActions = document.getElementById('services-actions');
 const cancelSelection = document.getElementById('cancel-selection');
 const confirmOrder = document.getElementById('confirm-order');
+
+// ✅ عناصر جديدة: نافذة الفيديو المنبثقة
+const videoModal = document.getElementById('video-modal');
+const videoModalClose = document.getElementById('video-modal-close');
+const videoPlayer = document.getElementById('video-player');
+
 // =======================
 // 2. نظام الترجمة
 // =======================
@@ -236,6 +242,7 @@ const translations = {
     'Support & Maintenance Desc': 'Technical support and regular maintenance for stability.'
   }
 };
+
 // =======================
 // 3. إدارة اللغة
 // =======================
@@ -312,6 +319,7 @@ document.querySelectorAll('#language-menu li').forEach(li => {
     setLanguage(li.dataset.lang);
   });
 });
+
 // =======================
 // 4. تأثير الكتابة
 // =======================
@@ -349,6 +357,7 @@ function typeRole() {
   const erasingSpeed = 100;
   setTimeout(typeRole, isDeleting ? erasingSpeed : typingSpeed);
 }
+
 // =======================
 // 5. تأثيرات التمرير والتنقل النشط
 // =======================
@@ -372,7 +381,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.4, rootMargin: '-80px 0px 0px 0px' });
 sections.forEach(section => observer.observe(section));
-
 // ✅ تم إزالة الوظيفة الزائدة updateActiveLink() والأحداث المرتبطة بها (الخطأ رقم 6)
 // لا حاجة لها لأن IntersectionObserver يكفي
 
@@ -426,6 +434,7 @@ function closePasswordModal() {
     passwordModal.hidden = true;
   }, 300);
 }
+
 // =======================
 // 7. التحقق من كلمة المرور (بدون تشفير)
 // =======================
@@ -447,6 +456,7 @@ async function checkPassword() {
 function toggleAdminPanel() {
   adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
 }
+
 // =======================
 // 8. تحكمات الإدارة
 // =======================
@@ -473,6 +483,7 @@ function changeAboutText() {
     showToast('Update "about" text manually in data.json', 'warning');
   }
 }
+
 // =======================
 // 9. وضع التحرير المباشر
 // =======================
@@ -483,6 +494,7 @@ function enterEditMode() {
 function exitEditMode() {
   editModeOverlay.style.display = 'none';
 }
+
 // =======================
 // 10. عرض رفع الملفات
 // =======================
@@ -493,6 +505,7 @@ function exitEditMode() {
     filenameSpan.textContent = this.files.length ? this.files[0].name : translations[currentLang][placeholder];
   });
 });
+
 // =======================
 // 11. إدارة البيانات (باستخدام data.json)
 // =======================
@@ -522,6 +535,7 @@ let skills = [];
 let tools = [];
 let projects = [];
 let services = [];
+
 async function loadData() {
   try {
     const response = await fetch('data.json');
@@ -547,8 +561,10 @@ async function loadData() {
   renderAll();
   setLanguage(currentLang);
 }
+
 // تم تعطيل saveData تمامًا
 // لا يوجد دالة saveData()
+
 // =======================
 // 12. دوال العرض
 // =======================
@@ -558,6 +574,7 @@ function renderAll() {
   renderProjects();
   renderServices();
 }
+
 function renderSkills() {
   if (!skillsGrid) return;
   skillsGrid.innerHTML = '';
@@ -573,6 +590,7 @@ function renderSkills() {
     skillsGrid.appendChild(card);
   });
 }
+
 function renderTools() {
   if (!toolsGrid) return;
   toolsGrid.innerHTML = '';
@@ -588,6 +606,89 @@ function renderTools() {
     toolsGrid.appendChild(card);
   });
 }
+
+// =======================
+// ✅ 19. وظيفة تشغيل الفيديو في نافذة منبثقة
+// =======================
+
+// فتح النافذة المنبثقة وتشغيل الفيديو
+function openVideoModal(videoSrc) {
+  if (videoSrc && videoPlayer && videoModal) {
+    videoPlayer.src = videoSrc;
+    videoPlayer.load(); // تحميل الفيديو الجديد
+    videoModal.classList.add('show');
+  }
+}
+
+// إغلاق النافذة المنبثقة ووقف الفيديو
+function closeVideoModal() {
+  if (videoModal && videoPlayer) {
+    videoModal.classList.remove('show');
+    videoPlayer.pause();
+    videoPlayer.src = ''; // تفريغ مصدر الفيديو لإيقاف التحميل
+  }
+}
+
+// أحداث إغلاق النافذة المنبثقة
+videoModalClose?.addEventListener('click', closeVideoModal);
+videoModal?.addEventListener('click', (e) => {
+  if (e.target === videoModal) {
+    closeVideoModal();
+  }
+});
+
+// =======================
+// ✅ 20. نظام الأزرار المتحركة (Draggable Buttons) للنافذة المنبثقة
+// =======================
+
+// دالة جعل العنصر قابلاً للسحب داخل حاوية معينة
+function makeDraggable(element, container) {
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  element.onmousedown = dragMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // الحصول على الموضع (X, Y)
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // حساب الموضع الجديد
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+
+    // تحديد الموضع الجديد مع الحدود
+    const newTop = element.offsetTop - pos2;
+    const newLeft = element.offsetLeft - pos1;
+
+    // الحدود العليا والسفلية (ضمن حاوية الصورة)
+    const topLimit = 0;
+    const bottomLimit = container.offsetHeight - element.offsetHeight;
+    const leftLimit = 0;
+    const rightLimit = container.offsetWidth - element.offsetWidth;
+
+    element.style.top = Math.min(Math.max(newTop, topLimit), bottomLimit) + "px";
+    element.style.left = Math.min(Math.max(newLeft, leftLimit), rightLimit) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+// =======================
+// ✅ 21. تعديل دالة عرض المشاريع (renderProjects) لإضافة الزر المتحرك
+// =======================
+
 function renderProjects() {
   if (!projectsGrid) return;
   projectsGrid.innerHTML = '';
@@ -599,10 +700,14 @@ function renderProjects() {
   projects.forEach(project => {
     const card = document.createElement('div');
     card.className = 'project-card';
-    // ✅ تم استخدام نظام الترجمة هنا أيضًا
+
+    // ✅ بناء HTML للبطاقة مع الزر المتحرك
     const desc = currentLang === 'ar' ? project.desc_ar : project.desc_en;
     card.innerHTML = `
-      <img src="${project.image}" alt="${project.name}" class="project-img">
+      <div class="project-img-wrapper" style="position: relative;">
+        <img src="${project.image}" alt="${project.name}" class="project-img">
+        ${project.video ? `<button class="draggable-video-btn" aria-label="Play video"><i class="fas fa-play"></i></button>` : ''}
+      </div>
       <div class="project-content">
         <h3>${project.name}</h3>
         <p>${desc}</p>
@@ -610,9 +715,23 @@ function renderProjects() {
       </div>
     `;
     projectsGrid.appendChild(card);
+
+    // ✅ إضافة منطق السحب فقط إذا كان هناك فيديو
+    if (project.video) {
+      const btn = card.querySelector('.draggable-video-btn');
+      const imgWrapper = card.querySelector('.project-img-wrapper');
+      makeDraggable(btn, imgWrapper);
+
+      // ✅ ربط الزر بفتح النافذة المنبثقة عند النقر
+      btn.onclick = (e) => {
+        e.stopPropagation(); // منع تفعيل أحداث أخرى على البطاقة
+        openVideoModal(project.video);
+      };
+    }
   });
   updateProjectsTitle();
 }
+
 function updateProjectsTitle() {
   const count = projects.length;
   const key = 'Latest Projects';
@@ -621,6 +740,7 @@ function updateProjectsTitle() {
     projectsTitle.textContent = template.replace('%d', count);
   }
 }
+
 function renderServices() {
   if (!servicesGrid) return;
   servicesGrid.innerHTML = '';
@@ -637,6 +757,7 @@ function renderServices() {
     servicesGrid.appendChild(card);
   });
 }
+
 // =======================
 // 13. قوائم الحذف
 // =======================
@@ -654,6 +775,7 @@ function renderDeleteProjectList() {
     deleteProjectList.appendChild(item);
   });
 }
+
 function renderDeleteSkillList() {
   if (!deleteSkillList) return;
   deleteSkillList.innerHTML = '';
@@ -668,6 +790,7 @@ function renderDeleteSkillList() {
     deleteSkillList.appendChild(item);
   });
 }
+
 function renderDeleteToolList() {
   if (!deleteToolList) return;
   deleteToolList.innerHTML = '';
@@ -682,6 +805,7 @@ function renderDeleteToolList() {
     deleteToolList.appendChild(item);
   });
 }
+
 // =======================
 // 14. تأكيد والحذف
 // =======================
@@ -704,6 +828,7 @@ async function confirmAndDelete(type, index) {
     showToast(t['Incorrect Password'], 'error');
   }
 }
+
 // =======================
 // 15. نموذج الاتصال - البريد الإلكتروني وواتساب
 // =======================
@@ -781,6 +906,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
+
 // =======================
 // 16. نماذج الإدارة
 // =======================
@@ -811,6 +937,7 @@ formProject.addEventListener('submit', (e) => {
   videoFilename.textContent = translations[currentLang]['Upload Video (optional)'];
   showToast('Project added to preview. Update data.json manually!', 'success');
 });
+
 formSkill.addEventListener('submit', (e) => {
   e.preventDefault();
   const short = document.getElementById('input-skill-short').value;
@@ -830,6 +957,7 @@ formSkill.addEventListener('submit', (e) => {
   formSkill.reset();
   showToast('Skill added to preview. Update data.json manually!', 'success');
 });
+
 formTool.addEventListener('submit', (e) => {
   e.preventDefault();
   const short = document.getElementById('input-tool-short').value;
@@ -849,6 +977,7 @@ formTool.addEventListener('submit', (e) => {
   formTool.reset();
   showToast('Tool added to preview. Update data.json manually!', 'success');
 });
+
 // =======================
 // 17. الإشعارات وردود الفعل
 // =======================
@@ -859,6 +988,7 @@ function showToast(message, type = 'success') {
   toast.classList.add(type, 'show');
   setTimeout(() => toast.classList.remove('show'), 5000);
 }
+
 // =======================
 // 18. منطق قسم الخدمات
 // =======================
@@ -873,6 +1003,7 @@ orderServiceBtn.addEventListener('click', () => {
   servicesActions.style.display = 'block';
   orderServiceBtn.style.display = 'none';
 });
+
 cancelSelection.addEventListener('click', () => {
   document.querySelectorAll('.service-card').forEach(card => {
     card.classList.remove('selectable', 'selected');
@@ -881,6 +1012,7 @@ cancelSelection.addEventListener('click', () => {
   servicesActions.style.display = 'none';
   orderServiceBtn.style.display = 'inline-flex';
 });
+
 confirmOrder.addEventListener('click', () => {
   const selected = document.querySelectorAll('.service-card.selected');
   if (selected.length === 0) {
@@ -896,7 +1028,8 @@ confirmOrder.addEventListener('click', () => {
     message = currentLang === 'ar' ? serviceNames[0].message : serviceNames[0].message_en;
   } else {
     const messages = serviceNames.map(s => currentLang === 'ar' ? s.message : s.message_en);
-    message = messages.join('\n');
+    message = messages.join('
+');
   }
   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
   messageInput.value = message;
