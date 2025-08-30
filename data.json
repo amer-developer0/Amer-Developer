@@ -85,6 +85,14 @@
       "video": "",
       "desc_en": "A modern, fast, and fully responsive landing page for the ‘Waz3ha Sah’ app. Designed to present the app’s concept clearly with bilingual support and an optimized subscription form. Built with HTML, CSS, and JavaScript, focusing on performance, aesthetics, and user experience.",
       "desc_ar": "صفحة هبوط عصرية وسريعة لتطبيق «وزّعها صح». صُممت لتوضيح فكرة التطبيق بوضوح مع دعم ثنائي اللغة ونموذج اشتراك محسّن. بُنيت باستخدام HTML وCSS وJavaScript مع تركيز على الأداء، الجمالية، وتجربة المستخدم، وبأسلوب متجاوب يناسب جميع الأجهزة."
+    },
+    {
+      "name": "عنوان تجريبي"
+      "link": "https://amer-developer0.github.io/Waz3ha--landing-page/"
+      "image": "assets/images/logo.png"
+      "video": "assets/videos/build_with_amer_vid"
+      "desc_en": "eeeeeeeee"
+      "desc_ar": "وصف تجريبي عربي"
     }
   ],
   "services": [
