@@ -80,7 +80,7 @@
     },
     {
       "name": "وزّعها صح - waz3ha",
-      "link": "https://amer-developer0.github.io/Waz3ha--landing-page/",
+      "link": "https://amer-developer0.github.io/Waz3ha--landing-page",
       "image": "assets/images/waz3ha_landing.png",
       "video": "",
       "desc_en": "A modern, fast, and fully responsive landing page for the ‘Waz3ha Sah’ app. Designed to present the app’s concept clearly with bilingual support and an optimized subscription form. Built with HTML, CSS, and JavaScript, focusing on performance, aesthetics, and user experience.",
@@ -96,8 +96,8 @@
     },
     {
   "name": "Flashe",
-  "link": "https://amer-developer0.github.io/Flashe",
-  "image": "assets/images/flashe.png",
+  "link": "https://amer-developer0.github.io/Flashe/",
+  "image": "/assets/images/flashe.png",
   "video": "",
   "desc_en": "Professional Landing Page for Flashe Educational Flash Drive\n\nDesigned and developed a complete landing page for a digital educational product targeting children. The site features engaging sections for product benefits and customer testimonials, along with a smart order form that dynamically calculates price and shipping based on user selections (type, quantity, governorate) and sends the order directly via WhatsApp. Built with vanilla HTML5, CSS3, and JavaScript for optimal performance and maintainability.",
   "desc_ar": "موقع هبوط احترافي لفلاشة Flashe التعليمية\n\nتصميم وتطوير صفحة هبوط متكاملة لعرض منتج تعليمي رقمي موجه للأطفال. الموقع يحتوي على أقسام جذابة للتعريف بالمميزات وآراء العملاء، بالإضافة إلى نموذج طلب ذكي يحسب السعر والشحن تلقائيًا بناءً على اختيار المستخدم (النوع، الكمية، المحافظة) ويُرسل الطلب مباشرة عبر واتساب. تم تطويره باستخدام HTML5, CSS3, و JavaScript الخالص دون أي إطارات عمل."
