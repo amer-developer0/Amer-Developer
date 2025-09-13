@@ -1,7 +1,7 @@
 /**
  * ========================================
  * 🚀 Amer Developer Portfolio - FINAL SCRIPT (تم التصحيح الكامل)
- * Version: 17.7 | تم إصلاح الأخطاء 1-6 | تم إزالة updateActiveLink الزائدة
+ * Version: 17.8 | تم إصلاح الأخطاء 1-6 + مشكلة المشاريع الفارغة + ID المكرر
  * Author: Amer Developer
  * ========================================
  */
@@ -48,8 +48,8 @@ const passwordError = document.getElementById('password-error');
 // الأقسام والتنقل
 const sections = document.querySelectorAll('.section, #home');
 const navLinks = document.querySelectorAll('.nav-link');
-// نص "من أنا" (فقرات متعددة)
-const aboutText = document.getElementById('about-text');
+// نص "من أنا" (فقرات متعددة) - تم تعديل IDs في HTML
+const aboutText1 = document.getElementById('about-text-1');
 const aboutText2 = document.getElementById('about-text-2');
 const aboutText3 = document.getElementById('about-text-3');
 // اسم البطل (لتغيير "Amer" إلى "عامر" بالعربية)
@@ -72,7 +72,7 @@ const servicesActions = document.getElementById('services-actions');
 const cancelSelection = document.getElementById('cancel-selection');
 const confirmOrder = document.getElementById('confirm-order');
 
-// ✅ عناصر جديدة: نافذة الفيديو المنبثقة
+// عناصر جديدة: نافذة الفيديو المنبثقة
 const videoModal = document.getElementById('video-modal');
 const videoModalClose = document.getElementById('video-modal-close');
 const videoPlayer = document.getElementById('video-player');
@@ -269,49 +269,49 @@ function setLanguage(lang) {
         el.textContent = value;
       } else if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
         el.textContent = value;
-      } else if (el.tagName === 'P' && !el.id.startsWith('about-text')) {
+      } else if (el.tagName === 'P' && !el.id.startsWith('about-text')) { // Keep about-text content as is
         el.textContent = value;
       } else {
         el.textContent = value;
       }
     }
   });
+  // Manually update about section paragraphs
   if (lang === 'ar') {
-    aboutText.textContent = 'مرحبًا، أنا عامر من مصر 🇪🇬، مطوّر ويب ومبرمج مهتم بتحويل الأفكار إلى حلول رقمية عملية وفعّالة. بدأت رحلتي في عالم البرمجة بالتعلّم الذاتي، ومع كل مشروع أنجزه أكتسب خبرة أعمق ورؤية أوسع.';
+    aboutText1.textContent = 'مرحبًا، أنا عامر من مصر 🇪🇬، مطوّر ويب ومبرمج مهتم بتحويل الأفكار إلى حلول رقمية عملية وفعّالة. بدأت رحلتي في عالم البرمجة بالتعلّم الذاتي، ومع كل مشروع أنجزه أكتسب خبرة أعمق ورؤية أوسع.';
     aboutText2.textContent = 'أعمل على تصميم وبرمجة مواقع عصرية متجاوبة وسهلة الاستخدام، مع التركيز على تجربة المستخدم وأدق التفاصيل. أتقن استخدام HTML، CSS، وJavaScript لتطوير واجهات احترافية، بالإضافة إلى Python لبناء أدوات وتطبيقات ذكية.';
     aboutText3.textContent = 'أسعى دائمًا لتطوير مهاراتي وإضافة تقنيات جديدة إلى صندوق أدواتي، بهدف تقديم أفضل قيمة ممكنة لكل عميل. وأؤمن أن نجاح أي مشروع يبدأ من فهم الهدف والرؤية بوضوح، ثم تحويلهما إلى منتج رقمي يحقق المطلوب بكفاءة واحترافية.';
   } else {
-    aboutText.textContent = 'Hello, I\'m Amer from Egypt 🇪🇬, a web developer and programmer passionate about turning ideas into practical and effective digital solutions. I started my journey in programming through self-learning, and with every project I complete, I gain deeper experience and broader vision.';
+    aboutText1.textContent = 'Hello, I\'m Amer from Egypt 🇪🇬, a web developer and programmer passionate about turning ideas into practical and effective digital solutions. I started my journey in programming through self-learning, and with every project I complete, I gain deeper experience and broader vision.';
     aboutText2.textContent = 'I specialize in designing and coding modern, responsive, and user-friendly websites, with a strong focus on user experience and fine details. I master HTML, CSS, and JavaScript to create professional interfaces, along with Python for building smart tools and applications.';
     aboutText3.textContent = 'I always strive to improve my skills and add new technologies to my toolkit, aiming to deliver the highest possible value to every client. I believe that the success of any project starts with a clear understanding of the goal and vision, then transforming them into a digital product that achieves the desired outcome efficiently and professionally.';
   }
-  document.title = lang === 'ar' 
-    ? 'عامر المطور | حلول برمجية مبتكرة لمستقبل رقمي متطور' 
+  document.title = lang === 'ar'
+    ? 'عامر المطور | حلول برمجية مبتكرة لمستقبل رقمي متطور'
     : 'Amer Developer | Innovative Software Solutions for an Advanced Digital Future';
   updateProjectsTitle();
   document.querySelectorAll('#language-menu li').forEach(li => {
     li.classList.toggle('active', li.dataset.lang === lang);
   });
-  languageMenu.hidden = true;
+  languageMenu.classList.add('hidden'); // Use class for hidden
   renderDeleteProjectList();
   renderDeleteSkillList();
   renderDeleteToolList();
   renderSkills();
   renderTools();
   renderServices();
-  // ✅ تم إصلاح الخطأ رقم 1: تأكد من إعادة رسم المشاريع عند تغيير اللغة
-  renderProjects(); 
+  renderProjects();
   typingText.textContent = '';
   typeRole();
   showToast(`Language changed to ${lang.toUpperCase()}`);
 }
 languageSwitcher.addEventListener('click', (e) => {
   e.stopPropagation();
-  languageMenu.hidden = !languageMenu.hidden;
+  languageMenu.classList.toggle('hidden'); // Use class for hidden
 });
 document.addEventListener('click', (e) => {
   if (!languageSwitcher.contains(e.target)) {
-    languageMenu.hidden = true;
+    languageMenu.classList.add('hidden'); // Use class for hidden
   }
 });
 document.querySelectorAll('#language-menu li').forEach(li => {
@@ -373,16 +373,14 @@ const observer = new IntersectionObserver((entries) => {
         }
       });
       if (id === 'services') {
-        orderServiceBtn.style.display = 'inline-flex';
+        orderServiceBtn.classList.remove('hidden');
       } else {
-        orderServiceBtn.style.display = 'none';
+        orderServiceBtn.classList.add('hidden');
       }
     }
   });
 }, { threshold: 0.4, rootMargin: '-80px 0px 0px 0px' });
 sections.forEach(section => observer.observe(section));
-// ✅ تم إزالة الوظيفة الزائدة updateActiveLink() والأحداث المرتبطة بها (الخطأ رقم 6)
-// لا حاجة لها لأن IntersectionObserver يكفي
 
 // =======================
 // 6. الوصول للإدارة (8 نقرات)
@@ -424,14 +422,14 @@ if (heroAvatar) {
 }
 function openPasswordModal() {
   passwordModal.classList.add('show');
-  passwordModal.hidden = false;
+  passwordModal.classList.remove('hidden'); // Use class for hidden
   adminPassword.value = '';
   passwordError.style.display = 'none';
 }
 function closePasswordModal() {
   passwordModal.classList.remove('show');
   setTimeout(() => {
-    passwordModal.hidden = true;
+    passwordModal.classList.add('hidden'); // Use class for hidden
   }, 300);
 }
 
@@ -440,7 +438,7 @@ function closePasswordModal() {
 // =======================
 async function checkPassword() {
   const pass = adminPassword.value;
-  const correctPassword = 'ameramer9.1.2010';
+  const correctPassword = 'ameramer9.1.2010'; // WARNING: Hardcoded password, not secure for production!
   if (pass === correctPassword) {
     closePasswordModal();
     toggleAdminPanel();
@@ -454,21 +452,21 @@ async function checkPassword() {
   }
 }
 function toggleAdminPanel() {
-  adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
+  adminPanel.classList.toggle('hidden'); // Use class for hidden
 }
 
 // =======================
 // 8. تحكمات الإدارة
 // =======================
 function closeAllForms() {
-  [formAddProject, formAddSkill, formAddTool, deleteSections].forEach(f => f.style.display = 'none');
+  [formAddProject, formAddSkill, formAddTool, deleteSections].forEach(f => f.classList.add('hidden')); // Use class for hidden
 }
-function openAddProject() { closeAllForms(); formAddProject.style.display = 'block'; }
-function openAddSkill() { closeAllForms(); formAddSkill.style.display = 'block'; }
-function openAddTool() { closeAllForms(); formAddTool.style.display = 'block'; }
-function openDeleteProject() { closeAllForms(); deleteSections.style.display = 'block'; }
-function openDeleteSkill() { closeAllForms(); deleteSections.style.display = 'block'; }
-function openDeleteTool() { closeAllForms(); deleteSections.style.display = 'block'; }
+function openAddProject() { closeAllForms(); formAddProject.classList.remove('hidden'); } // Use class for hidden
+function openAddSkill() { closeAllForms(); formAddSkill.classList.remove('hidden'); } // Use class for hidden
+function openAddTool() { closeAllForms(); formAddTool.classList.remove('hidden'); } // Use class for hidden
+function openDeleteProject() { closeAllForms(); deleteSections.classList.remove('hidden'); renderDeleteProjectList(); } // Use class for hidden
+function openDeleteSkill() { closeAllForms(); deleteSections.classList.remove('hidden'); renderDeleteSkillList(); } // Use class for hidden
+function openDeleteTool() { closeAllForms(); deleteSections.classList.remove('hidden'); renderDeleteToolList(); } // Use class for hidden
 function changeLogo() {
   const newText = prompt('Upload new logo image path (e.g. /assets/images/new-logo.png):', logoImg.src);
   if (newText && newText.trim()) {
@@ -477,22 +475,30 @@ function changeLogo() {
   }
 }
 function changeAboutText() {
-  const newText = prompt('Enter new About Me text:', aboutText.textContent);
-  if (newText && newText.trim()) {
-    aboutText.textContent = newText;
-    showToast('Update "about" text manually in data.json', 'warning');
+  const newText1 = prompt('Enter new About Me text (paragraph 1):', aboutText1.textContent);
+  if (newText1 && newText1.trim()) {
+    aboutText1.textContent = newText1;
   }
+  const newText2 = prompt('Enter new About Me text (paragraph 2):', aboutText2.textContent);
+  if (newText2 && newText2.trim()) {
+    aboutText2.textContent = newText2;
+  }
+  const newText3 = prompt('Enter new About Me text (paragraph 3):', aboutText3.textContent);
+  if (newText3 && newText3.trim()) {
+    aboutText3.textContent = newText3;
+  }
+  showToast('Update "about" text manually in data.json', 'warning');
 }
 
 // =======================
 // 9. وضع التحرير المباشر
 // =======================
 function enterEditMode() {
-  editModeOverlay.style.display = 'block';
+  editModeOverlay.classList.remove('hidden'); // Use class for hidden
   siteFrame.src = './';
 }
 function exitEditMode() {
-  editModeOverlay.style.display = 'none';
+  editModeOverlay.classList.add('hidden'); // Use class for hidden
 }
 
 // =======================
@@ -524,7 +530,7 @@ const defaultTools = [
   { short: 'Figma', full: 'Figma', desc_en: 'Designing user interfaces and experiences professionally.', desc_ar: 'تصميم واجهات وتجربة مستخدم بشكل احترافي.' },
   { short: 'AI Tools', full: 'Artificial Intelligence Tools', desc_en: 'Using AI tools to improve work and save time.', desc_ar: 'استخدام أدوات الذكاء الاصطناعي في تحسين العمل وتوفير الوقت.' }
 ];
-const defaultProjects = [];
+const defaultProjects = []; // Will be overwritten by data.json
 const defaultServices = [
   { name: 'Landing Pages', desc: 'Landing Pages Desc', message: 'أرغب في طلب خدمة تصميم صفحة هبوط.', message_en: 'I want to order a Landing Page service.' },
   { name: 'Websites', desc: 'Websites Desc', message: 'أرغب في طلب خدمة تطوير موقع ويب.', message_en: 'I want to order a Website development service.' },
@@ -539,31 +545,33 @@ let services = [];
 async function loadData() {
   try {
     const response = await fetch('data.json');
-    if (response.ok) {
+    if (!response.ok) {
+      // If data.json is not found or there's an error, log it and use defaults
+      console.warn(`Failed to load data.json: ${response.status} ${response.statusText}. Using default data.`);
+      skills = defaultSkills;
+      tools = defaultTools;
+      projects = defaultProjects; // This will be empty if data.json fails
+      services = defaultServices;
+    } else {
       const data = await response.json();
       skills = data.skills || defaultSkills;
       tools = data.tools || defaultTools;
       projects = data.projects || defaultProjects;
       services = data.services || defaultServices;
-    } else {
-      skills = defaultSkills;
-      tools = defaultTools;
-      projects = defaultProjects;
-      services = defaultServices;
     }
   } catch (err) {
-    console.warn('Could not load data.json, using defaults:', err);
+    console.error('Error fetching data.json:', err);
+    console.warn('Using default data due to fetch error.');
     skills = defaultSkills;
     tools = defaultTools;
-    projects = defaultProjects;
+    projects = defaultProjects; // This will be empty if data.json fails
     services = defaultServices;
   }
   renderAll();
-  setLanguage(currentLang);
+  setLanguage(currentLang); // Call setLanguage after data is loaded and rendered
 }
 
-// تم تعطيل saveData تمامًا
-// لا يوجد دالة saveData()
+// No saveData() function as per previous discussion
 
 // =======================
 // 12. دوال العرض
@@ -608,7 +616,7 @@ function renderTools() {
 }
 
 // =======================
-// ✅ 19. وظيفة تشغيل الفيديو في نافذة منبثقة
+// 19. وظيفة تشغيل الفيديو في نافذة منبثقة
 // =======================
 
 // فتح النافذة المنبثقة وتشغيل الفيديو
@@ -617,6 +625,7 @@ function openVideoModal(videoSrc) {
     videoPlayer.src = videoSrc;
     videoPlayer.load(); // تحميل الفيديو الجديد
     videoModal.classList.add('show');
+    videoModal.classList.remove('hidden'); // Show modal
   }
 }
 
@@ -624,6 +633,7 @@ function openVideoModal(videoSrc) {
 function closeVideoModal() {
   if (videoModal && videoPlayer) {
     videoModal.classList.remove('show');
+    videoModal.classList.add('hidden'); // Hide modal
     videoPlayer.pause();
     videoPlayer.src = ''; // تفريغ مصدر الفيديو لإيقاف التحميل
   }
@@ -638,7 +648,7 @@ videoModal?.addEventListener('click', (e) => {
 });
 
 // =======================
-// ✅ 20. نظام الأزرار المتحركة (Draggable Buttons) للنافذة المنبثقة
+// 20. نظام الأزرار المتحركة (Draggable Buttons) للنافذة المنبثقة
 // =======================
 
 // دالة جعل العنصر قابلاً للسحب داخل حاوية معينة
@@ -686,22 +696,22 @@ function makeDraggable(element, container) {
 }
 
 // =======================
-// ✅ 21. تعديل دالة عرض المشاريع (renderProjects) لإضافة الزر المتحرك
+// 21. تعديل دالة عرض المشاريع (renderProjects) لإضافة الزر المتحرك
 // =======================
 
 function renderProjects() {
   if (!projectsGrid) return;
   projectsGrid.innerHTML = '';
   if (projects.length === 0) {
-    projectsEmpty.style.display = 'block';
+    projectsEmpty.classList.remove('hidden'); // Use class for hidden
     return;
   }
-  projectsEmpty.style.display = 'none';
+  projectsEmpty.classList.add('hidden'); // Use class for hidden
   projects.forEach(project => {
     const card = document.createElement('div');
     card.className = 'project-card';
 
-    // ✅ بناء HTML للبطاقة مع الزر المتحرك
+    // بناء HTML للبطاقة مع الزر المتحرك
     const desc = currentLang === 'ar' ? project.desc_ar : project.desc_en;
     card.innerHTML = `
       <div class="project-img-wrapper" style="position: relative;">
@@ -716,13 +726,13 @@ function renderProjects() {
     `;
     projectsGrid.appendChild(card);
 
-    // ✅ إضافة منطق السحب فقط إذا كان هناك فيديو
+    // إضافة منطق السحب فقط إذا كان هناك فيديو
     if (project.video) {
       const btn = card.querySelector('.draggable-video-btn');
       const imgWrapper = card.querySelector('.project-img-wrapper');
       makeDraggable(btn, imgWrapper);
 
-      // ✅ ربط الزر بفتح النافذة المنبثقة عند النقر
+      // ربط الزر بفتح النافذة المنبثقة عند النقر
       btn.onclick = (e) => {
         e.stopPropagation(); // منع تفعيل أحداث أخرى على البطاقة
         openVideoModal(project.video);
@@ -814,7 +824,7 @@ async function confirmAndDelete(type, index) {
   if (!confirm(t['Confirm Delete'])) return;
   const pass = prompt(t['Enter Password']);
   if (!pass) return;
-  const correctPassword = 'ameramer9.1.2010';
+  const correctPassword = 'ameramer9.1.2010'; // WARNING: Hardcoded password, not secure for production!
   if (pass === correctPassword) {
     if (type === 'project') projects.splice(index, 1);
     else if (type === 'skill') skills.splice(index, 1);
@@ -833,8 +843,8 @@ async function confirmAndDelete(type, index) {
 // 15. نموذج الاتصال - البريد الإلكتروني وواتساب
 // =======================
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadData();
-  setLanguage(currentLang);
+  await loadData(); // Ensure data is loaded before setting language and other initializations
+  // setLanguage(currentLang); // Already called inside loadData()
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
   }
@@ -856,14 +866,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       showToast(t['Error Invalid Email'], 'error');
       return;
     }
-    let whatsappMessage = `Hello Amer Abdo,
-`;
-    whatsappMessage += `My name is ${name}
-`;
-    whatsappMessage += `Email: ${email}
-`;
-    whatsappMessage += `Message: ${message}
-`;
+    let whatsappMessage = `Hello Amer Abdo,\n`;
+    whatsappMessage += `My name is ${name}\n`;
+    whatsappMessage += `Email: ${email}\n`;
+    whatsappMessage += `Message: ${message}\n`;
     whatsappMessage += `Sent from your portfolio website.`;
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
@@ -918,8 +924,8 @@ formProject.addEventListener('submit', (e) => {
   const videoFile = projectVideoInput.files[0];
   const descEn = document.getElementById('input-project-desc-en').value;
   const descAr = document.getElementById('input-project-desc-ar').value;
-  const imageUrl = imageFile ? `/assets/images/${imageFile.name}` : 'assets/images/project-placeholder.jpg';
-  const videoUrl = videoFile ? `/assets/videos/${videoFile.name}` : '';
+  const imageUrl = imageFile ? `assets/images/${imageFile.name}` : 'assets/images/project-placeholder.jpg'; // Corrected path
+  const videoUrl = videoFile ? `assets/videos/${videoFile.name}` : ''; // Corrected path
   const newProject = {
     name,
     link,
@@ -962,8 +968,8 @@ formTool.addEventListener('submit', (e) => {
   e.preventDefault();
   const short = document.getElementById('input-tool-short').value;
   const full = document.getElementById('input-tool-full').value;
-  const descEn = document.getElementById('input-skill-desc-en').value;
-  const descAr = document.getElementById('input-skill-desc-ar').value;
+  const descEn = document.getElementById('input-tool-desc-en').value; // Corrected ID
+  const descAr = document.getElementById('input-tool-desc-ar').value; // Corrected ID
   const newTool = {
     short,
     full,
@@ -1000,8 +1006,8 @@ orderServiceBtn.addEventListener('click', () => {
       card.classList.toggle('selected');
     };
   });
-  servicesActions.style.display = 'block';
-  orderServiceBtn.style.display = 'none';
+  servicesActions.classList.remove('hidden'); // Use class for hidden
+  orderServiceBtn.classList.add('hidden'); // Use class for hidden
 });
 
 cancelSelection.addEventListener('click', () => {
@@ -1009,8 +1015,8 @@ cancelSelection.addEventListener('click', () => {
     card.classList.remove('selectable', 'selected');
     card.onclick = null;
   });
-  servicesActions.style.display = 'none';
-  orderServiceBtn.style.display = 'inline-flex';
+  servicesActions.classList.add('hidden'); // Use class for hidden
+  orderServiceBtn.classList.remove('hidden'); // Use class for hidden
 });
 
 confirmOrder.addEventListener('click', () => {
@@ -1021,6 +1027,7 @@ confirmOrder.addEventListener('click', () => {
   }
   const serviceNames = Array.from(selected).map(card => {
     const h3 = card.querySelector('h3').textContent;
+    // Find the service object based on the translated name
     return services.find(s => translations[currentLang][s.name] === h3);
   });
   let message = '';
@@ -1028,7 +1035,7 @@ confirmOrder.addEventListener('click', () => {
     message = currentLang === 'ar' ? serviceNames[0].message : serviceNames[0].message_en;
   } else {
    const messages = serviceNames.map(s => currentLang === 'ar' ? s.message : s.message_en);
-   message = messages.join('\n');  // ✅ تم التصحيح: استخدم \n بدل سطر جديد حرفي
+   message = messages.join('\n');
   }
   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
   messageInput.value = message;
@@ -1037,6 +1044,9 @@ confirmOrder.addEventListener('click', () => {
     card.classList.remove('selectable', 'selected');
     card.onclick = null;
   });
-  servicesActions.style.display = 'none';
-  orderServiceBtn.style.display = 'inline-flex';
+  servicesActions.classList.add('hidden'); // Use class for hidden
+  orderServiceBtn.classList.remove('hidden'); // Use class for hidden
 });
+
+// Initial load
+// document.addEventListener('DOMContentLoaded', loadData); // Already called above
