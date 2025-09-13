@@ -97,11 +97,11 @@
     {
   "name": "Flashe",
   "link": "https://amer-developer0.github.io/Flashe/",
-  "image": "/assets/images/flashe.png",
+  "image": "assets/images/flashe.png",
   "video": "",
   "desc_en": "Professional Landing Page for Flashe Educational Flash Drive\n\nDesigned and developed a complete landing page for a digital educational product targeting children. The site features engaging sections for product benefits and customer testimonials, along with a smart order form that dynamically calculates price and shipping based on user selections (type, quantity, governorate) and sends the order directly via WhatsApp. Built with vanilla HTML5, CSS3, and JavaScript for optimal performance and maintainability.",
   "desc_ar": "موقع هبوط احترافي لفلاشة Flashe التعليمية\n\nتصميم وتطوير صفحة هبوط متكاملة لعرض منتج تعليمي رقمي موجه للأطفال. الموقع يحتوي على أقسام جذابة للتعريف بالمميزات وآراء العملاء، بالإضافة إلى نموذج طلب ذكي يحسب السعر والشحن تلقائيًا بناءً على اختيار المستخدم (النوع، الكمية، المحافظة) ويُرسل الطلب مباشرة عبر واتساب. تم تطويره باستخدام HTML5, CSS3, و JavaScript الخالص دون أي إطارات عمل."
-}
+    } 
   ],
   "services": [
     {
