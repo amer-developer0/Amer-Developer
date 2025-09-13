@@ -37,7 +37,7 @@
   --shadow-lg: 0 20px 40px rgba(0, 255, 255, 0.25);
   --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-all: all var(--transition-fast);
-  --header-height: 70px; /* تم حذف التعريف المكرر */
+  --header-height: 70px;
   --container-width: 1200px;
 }
 /* Base Reset */
@@ -316,7 +316,7 @@ strong {
   justify-content: space-between;
   padding: 0 var(--space-lg);
   border-bottom: 1px solid var(--border-light);
-  transition: var(--transition-all), transform 0.3s ease-in-out; /* تم دمج التحويلات */
+  transition: var(--transition-all), transform 0.3s ease-in-out;
 }
 .logo img {
   width: 60px;
@@ -362,7 +362,6 @@ strong {
   transition: var(--transition-fast);
   border-radius: 1px;
 }
-/* ✅ تم دمج hover و active */
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
@@ -520,10 +519,9 @@ strong {
   border-color: var(--accent-teal);
   box-shadow: var(--shadow-md);
 }
-/* ✅ تم إصلاح مشكلة حجم الصورة */
 .project-img {
   width: 100%;
-  min-height: 140px; /* تم تقليل القيمة من 180 إلى 140 */
+  min-height: 140px;
   height: auto;
   object-fit: cover;
   object-position: center;
@@ -748,9 +746,6 @@ strong {
   visibility: hidden;
   transition: all 0.4s ease;
 }
-#password-modal[hidden] {
-  display: none;
-}
 #password-modal.show {
   opacity: 1;
   visibility: visible;
@@ -932,9 +927,6 @@ strong {
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s;
-}
-.modal[hidden] {
-  display: none;
 }
 .modal.show {
   opacity: 1;
@@ -1131,12 +1123,7 @@ section[id] {
     padding: 0 1rem;
   }
 }
-/* ✅ تم دمج هذه القاعدة مع التعريف الكامل أعلاه */
-/* لا حاجة لتعريف منفصل */
-
-/* ✅ أنماط نافذة فيديو المشروع */
-
-/* النافذة المنبثقة (Modal) */
+/* أنماط نافذة فيديو المشروع */
 .video-modal {
   position: fixed;
   top: 0;
@@ -1156,20 +1143,18 @@ section[id] {
   opacity: 1;
   visibility: visible;
 }
-
 /* محتوى النافذة المنبثقة */
 .video-modal-content {
   position: relative;
   max-width: 800px;
   width: 90%;
-  aspect-ratio: 16 / 9; /* نسبة عرض إلى ارتفاع شائعة */
+  aspect-ratio: 16 / 9;
   background: var(--primary-darker);
   border: 2px solid var(--accent-teal);
   border-radius: var(--border-radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
-
 /* زر الإغلاق */
 .video-modal-close {
   position: absolute;
@@ -1194,15 +1179,13 @@ section[id] {
   color: var(--primary-dark);
   transform: scale(1.1);
 }
-
 /* مشغل الفيديو */
 #video-player {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
-/* ✅ زر الفيديو المتحرك (Draggable Play Button) */
+/* زر الفيديو المتحرك (Draggable Play Button) */
 .draggable-video-btn {
   position: absolute;
   top: 10px;
@@ -1229,9 +1212,13 @@ section[id] {
   transform: scale(1.1);
   box-shadow: 0 0 25px var(--accent-teal-glow);
 }
-
 /* تأكد من أن الزر يبقى فوق الصورة */
 .project-card .draggable-video-btn {
   top: 10px;
   left: 10px;
+}
+
+/* Utility classes for display */
+.hidden {
+  display: none !important;
 }
