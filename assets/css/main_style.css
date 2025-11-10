@@ -1393,12 +1393,10 @@ a {text-decoration: none;}
     .hero-avatar {
       order: 1; /* سيظهر الأفاتار أولاً */
       max-width: 100%;
-        width: 360px;
-        height: 360px;
     }
     .avatar-wrapper {
-      width: 360px;
-      height: 360px;
+      width: 360px !important;
+      height: 360px !important;
       margin: 0 auto;
     }
     .avatar-img {
@@ -1416,8 +1414,8 @@ a {text-decoration: none;}
       font-size: var(--text-scale-02);
     }
     .btn-primary {
-      width: 200px;
-      height: 55px;
+      width: auto;
+      height: auto;
       margin-bottom: 1.5rem;
     }
     .social-icons-home {
@@ -1435,8 +1433,8 @@ a {text-decoration: none;}
       font-size: var(--text-scale-04);
     }
     .avatar-wrapper {
-      width: 200px;
-      height: 200px;
+      width: 250px;
+      height: 250px;
     }
     .btn-primary {
       width: 180px;
