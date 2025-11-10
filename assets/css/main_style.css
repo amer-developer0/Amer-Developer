@@ -1393,8 +1393,8 @@ a {text-decoration: none;}
     .hero-avatar {
       order: 1; /* سيظهر الأفاتار أولاً */
       max-width: 100%;
-        width: 100hv;
-        height: 100hv;
+        width: 360px;
+        height: 360px;
     }
     .avatar-wrapper {
       width: 280px;
